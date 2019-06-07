@@ -1,0 +1,17 @@
+{
+  "name": "@labiba/labiba-cli",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "bin": {
+    "@labiba/labiba": "bin/labiba-cli",
+    "labiba": "bin/labiba-cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Sameh Fakoua",
+  "license": "MIT",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
+}
