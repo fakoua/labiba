@@ -1,3 +1,3 @@
-<div style="direction:rtl">
+<div style="direction:rtl; text-align:right;">
 # انها لبيبة
 </div>
