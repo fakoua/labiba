@@ -1,15 +1,16 @@
 {
   "name": "labiba-transformer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Labiba Transformer",
   "author": "Sameh Fakoua <s.fakoua@gmail.com>",
-  "homepage": "https://www.qalamountools.com",
-  "repository": "https://www.npmjs.com/package/labiba-transformer",
-  "main": "index.js",
+  "homepage": "https://github.com/fakoua/labiba",
+  "repository": "https://github.com/fakoua/labiba",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "build": "babel src -d dist",
-    "start": "yarn build & node dist\\index.js"
+    "start": "yarn build & node dist\\index.js",
+    "test": "yarn build & node dist\\test.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -18,7 +19,6 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
-    "labiba-parser": "^0.0.1",
     "lodash": "^4.17.11"
   },
   "keywords": [

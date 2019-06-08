@@ -185,7 +185,7 @@ export const types: { [name: string]: TokenType } = {
   _extends: createKeyword("يرث", { beforeExpr }),
   _export: createKeyword("export"),
   _import: createKeyword("استيراد", { startsExpr }),
-  _null: createKeyword("null", { startsExpr }),
+  _null: createKeyword("فارغ", { startsExpr }),
   _true: createKeyword("صح", { startsExpr }),
   _false: createKeyword("غلط", { startsExpr }),
   _in: createKeyword("in", { beforeExpr, binop: 7 }),

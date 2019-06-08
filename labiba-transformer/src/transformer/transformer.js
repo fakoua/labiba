@@ -28,21 +28,138 @@ export function transformGlobal(objectName) {
     }
 
     function getGlobalName(objectName) {
+        console.log('============================')
         let found = globalOject.properties.find((el) => {
             return el.la === objectName;
         })
+        console.log('------------------' + found)
         return found ? found.js : objectName;
     }
     return getGlobalName(objectName);
 }
 
+export function tranformNew(objectName) {
+    const newObject = [
+        {js: 'Boolean', la: 'منطقي'},
+        {js: 'Number', la: 'رقم'},
+        {js: 'String', la: 'نص'},
+        {js: 'Date', la: 'تاريخ'},
+        {js: 'Array', la: 'مجموعة'},
+        {js: 'Function', la: 'مهمة'},
+        {js: 'Object', la: 'كائن'},
+    ];
+
+    let found = newObject.find((el) => {
+        return el.la === objectName;
+    });
+
+    return found ? found.js : objectName;
+}
+
 export function transformMember(objectName, propertyName) {
-    const generalObject = {
+    const globalOject = {
         properties: [
             {js: 'toString', la: 'الى_نص'},
+            {js: 'toDateString', la: 'الى_تاريخ_نصي'},
+            {js: 'toTimeString', la: 'اىل_وقت_نصي'},
+            {js: 'toLocaleString', la: 'الى_نص_موضعي'},
+            {js: 'toLocaleDateString', la: 'الى_تاريخ_نصي_موضعي'},
+            {js: 'toLocaleTimeString', la: 'الى_وقت_نصي_موضعي'},
+            {js: 'valueOf', la: 'قيمة'},
+            {js: 'getTime', la: 'احصل_وقت'},
+            {js: 'getFullYear', la: 'احصل_سنة_كاملة'},
+            {js: 'getUTCFullYear', la: 'احصل_سنة_كاملة_عالمي'},
+            {js: 'getMonth', la: 'احصل_شهر'},
+            {js: 'getUTCMonth', la: 'احصل_شهر_عالمي'},
+            {js: 'getDate', la: 'احصل_تاريخ'},
+            {js: 'getUTCDate', la: 'احصل_تاريخ_عالمي'},
+            {js: 'getDay', la: 'احصل_يوم'},
+            {js: 'getUTCDay', la: 'احصل_يوم_عالمي'},
+            {js: 'getHours', la: 'احصل_ساعة'},
+            {js: 'getUTCHours', la: 'احصل_ساعة_عالمي'},
+            {js: 'getMinutes', la: 'احصل_دقائق'},
+            {js: 'getUTCMinutes', la: 'احصل_دقائق_عالمي'},
+            {js: 'getSeconds', la: 'احصل_ثواني'},
+            {js: 'getUTCSeconds', la: 'احصل_ثواني_عالمي'},
+            {js: 'getMilliseconds', la: 'احصل_مللي_ثواني'},
+            {js: 'getUTCMilliseconds', la: 'احصل_مللي_ثواني_عالمي'},
+            {js: 'getTimeZoneOffset', la: 'احصل_فرق_توقيت_زمني'},
+            {js: 'setTime', la: 'اضبط_وقت'},
+            {js: 'setMilliseconds', la: 'اضبط_مللي_ثواني'},
+            {js: 'setUTCMilliseconds', la: 'اضبط_مللي_ثواني_عالمي'},
+            {js: 'setSeconds', la: 'اضبط_ثواني'},
+            {js: 'setUTCSeconds', la: 'اضبط_ثواني_عالمي'},
+            {js: 'setMinutes', la: 'اضبط_دقائق'},
+            {js: 'setUTCMinutes', la: 'اضبط_دقائق_عالمي'},
+            {js: 'setHours', la: 'اضبط_ساعة'},
+            {js: 'setUTCHours', la: 'اضبط_ساعة_عالمي'},
+            {js: 'setDate', la: 'اضبط_تاريخ'},
+            {js: 'setUTCDate', la: 'اضبط_تاريخ_عالمي'},
+            {js: 'setMonth', la: 'اضبط_شهر'},
+            {js: 'setUTCMonth', la: 'اضبط_شهر_عالمي'},
+            {js: 'setYear', la: 'اضبط_سنة'},
+            {js: 'setFullYear', la: 'اضبط_سنة_كاملة'},
+            {js: 'setUTCFullYear', la: 'اضبط_سنة_كاملة_عالمي'},
+            {js: 'toUTCString', la: 'الى_نص_عالمي'},
+            {js: 'toGMTString', la: 'الى_نص_غرينتش'},
+            {js: 'toISOString', la: 'الى_نص_جودة'},
+            {js: 'toJSON', la: 'الى_جايسون'},
+            {js: 'toFixed', la: 'الى_ثابت'},
+            {js: 'toExponential', la: 'الى_اسية'},
+            {js: 'toPrecision', la: 'اىل_دقة'},
+            {js: 'charAt', la: 'حرف_عند'},
+            {js: 'charCodeAt', la: 'رقم_حرف_عند'},
+            {js: 'codePointAt', la: 'رقم_حرف_عالمي_عند'},
+            {js: 'endsWith', la: 'ينتهي_ب'},
+            {js: 'localeCompare', la: 'مقارنة_محلية'},
+            {js: 'match', la: 'تطابق'},
+            {js: 'normalize', la: 'تطبيع'},
+            {js: 'padEnd', la: 'اضافة_فداية'},
+            {js: 'padStart', la: 'إضافة_نهاية'},
+            {js: 'repeat', la: 'كرر'},
+            {js: 'replace', la: 'بدل'},
+            {js: 'search', la: 'ابحث'},
+            {js: 'split', la: 'تقسيم'},
+            {js: 'startsWith', la: 'يبدا_ب'},
+            {js: 'substr', la: 'جزء_من_طول'},
+            {js: 'substring', la: 'جزء'},
+            {js: 'toLowerCase', la: 'الى_حرف_صغير'},
+            {js: 'toLocaleLowerCase', la: 'الى_حرف_صغير_محلي'},
+            {js: 'toUpperCase', la: 'الى_حرف_كبير'},
+            {js: 'toLocaleUpperCase', la: 'الى_حرف_كبير_محلي'},
+            {js: 'trim', la: 'تقليم'},
+            {js: 'concat', la: 'دمج'},
+            {js: 'copyWithin', la: 'نسخ'},
+            {js: 'entries', la: 'قيود'},
+            {js: 'fill', la: 'املء'},
+            {js: 'join', la: 'ضم'},
+            {js: 'find', la: 'اوجد'},
+            {js: 'findIndex', la: 'اوجد_فهرس'},
+            {js: 'includes', la: 'يشمل'},
+            {js: 'keys', la: 'مفاتيح'},
+            {js: 'pop', la: 'سحب'},
+            {js: 'push', la: 'دفع'},
+            {js: 'reverse', la: 'اعكس'},
+            {js: 'shift', la: 'انقل'},
+            {js: 'slice', la: 'تشريح'},
+            {js: 'sort', la: 'رتب'},
+            {js: 'splice', la: 'لصق'},
+            {js: 'unshift', la: 'انقل_عكسي'},
+            {js: 'indexOf', la: 'فهرس'},
+            {js: 'lastIndexOf', la: 'فهرس_اخير'},
+            {js: 'every', la: 'كل'},
+            {js: 'some', la: 'بعض'},
+            {js: 'forEach', la: 'تكرار_الكل'},
+            {js: 'map', la: 'خارطة'},
+            {js: 'filter', la: 'تصفية'},
+            {js: 'reduce', la: 'قلص'},
+            {js: 'reduceRight', la: 'قلس_اخير'},
+            {js: 'values', la: 'قيم'},
+            {js: 'apply', la: 'تطبيق'},
+            {js: 'call', la: 'نادي'},
+            {js: 'bind', la: 'ربط'},
         ]
     }
-
     const numberObject = {
         js: 'Number',
         la: 'رقم',
@@ -152,7 +269,7 @@ export function transformMember(objectName, propertyName) {
             }
         } else {
             //Example of d.getDay() while d is date ...
-            let prop = generalObject.properties.find( el => {
+            let prop = globalOject.properties.find( el => {
                 return el.la === propertyName;
             })
 

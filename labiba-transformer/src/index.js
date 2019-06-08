@@ -1,143 +1,16 @@
-import {parse} from 'asx-parser';
+import {parse} from 'labiba-parser';
 import generate from '@babel/generator';
 import * as labibaTransfrom from './transformer/transformer';
 
-const code = `
-// استيراد math from 'mith';
-// Start Of Program
-متغير سامح=1, k=10;
-let b=سامح;
-متغير c=1000;
-ثابت kk=14;
-اذا (a==1) {
-    console.log(1);
-    ثابت d=1;
-} غير {
-    //test
-    متغير sam = 12;
+exports.transform = function (labibaCode) {
+    const ast = parse(labibaCode)
+    processTransfrom(ast)
+    let output = generate(ast, {
+        sourceMaps: true
+    });
+    
+    return output.code
 }
-
-اذا (t==12) {
-    //hi
-}
-غير { 
-    //hi
-}
-
-تكرار (i=1;i++;i<10) {
-    متغير s = 1;
-    ثابت aaa=s;
-}
-
-طالما (a==1) {
-    ثابت cc=12;
-    تكرار (i=1;i++;i<10) {
-        متغير s = 1;
-        ثابت aaa=s;
-    }
-}
-
-مهمة رامي() {
-    //Test
-    متغير a=1, k=10;
-    ارجاع a;
-}
-
-فاصل (a) {
-    حالة 1:
-        console.log(1);
-        خروج;
-        حالة 2:
-        console.log(10);
-        خروج;
-}
-
-حاول {
-    متغير a=1;
-  } مشكلة(e) {
-    متغير a=e;
-   
-    ثابت t=1;
-  } 
-  اخيرا {
-
-  }
-
-ثابت سامي = نوع 1
-
-عقيم مهمة samo() {
-    console.log(123);
-}
-
-افعل {
-    console.log(1)
-    اكمل;
-  } طالما(1)
-
-  تكرار (متغير i=1;i++;i<10) {
-    متغير s = 1;
-    ثابت aaa=s;
-}
-
-صنف a {
-    init() {
-    }
-}
-  
-صنف bb يرث a {
-    init() {
-        ابي.init();
-    }
-}
-
-متغير cc = جديد a();
-
-متغير m = رياضيات.باي;
-
-متغير timeout=مهمة() {
-    متغير c=1;
-
-    مهمة cc() {
-        ثابت a=1;
-      }
-
-    ارجاع c;
-  };
-
-  تكرار(متغير sam = 1; sam++; sam < Math.PI) {
-      console.log(sam);
-  }
-
-  اذا (ر.باي === ر.جيب(12)) {
-      console.log(Math.cos(2));
-  }
-/*
-End of the program
-*/
-`
-
-let factorial = `
-مهمة فاكتوريال(رقم) {
-    ارجاع (رقم != 1) ؟ رقم * فاكتوريال(رقم -1) : 1
-    }
-    `
-
-let sam = `
-
-//@labiba
-متغير d = جديد Date();
-d.الى_نص()
-`    
-const ast = parse(sam)
-//console.log(JSON.stringify(ast))
-//console.log(ast.program.body);
-
-//const nodes = ast.program.body;
-
-
-//processAst(nodes);
-processTransfrom(ast);
-
 
 function processTransfrom(node) {
     if (Array.isArray(node)) {
@@ -174,6 +47,7 @@ function processNode(node) {
                 node.callee.property.name=member.propertyName
             } else {
                 // Global Functions
+                console.log('Global Functions')
                 node.callee.name=labibaTransfrom.transformGlobal(node.callee.name);
             }
             
@@ -184,74 +58,15 @@ function processNode(node) {
             node.object.name=member.objectName
             node.property.name=member.propertyName
         }
+
+        if (node.type === 'NewExpression') {
+            node.callee.name = labibaTransfrom.tranformNew(node.callee.name);
+        }
+
+        if (node.type === 'Identifier') {
+            if (node.name === 'غير_محدد') {
+                node.name = 'undefined'
+            }
+        }
     }
 }
-
-function processAst(nodes) {
-    nodes.forEach(node => {
-        switch (node.type) {
-            case 'VariableDeclaration':
-                node.kind = declaration(node) 
-                processAst(node.declarations);      
-                break;
-            case 'VariableDeclarator':
-                if (node.init.body) {
-                    processAst(node.init.body.body)
-                }
-                break;
-            case 'IfStatement':
-                // if
-                processAst(node.consequent.body)
-                if (node.alternate) {
-                    // else
-                    processAst(node.alternate.body)
-                }
-                break;
-            case 'ForStatement':
-                    processAst(node.body.body)
-                    if (node.init.type==='VariableDeclaration') {
-                        node.init.kind = declaration(node.init)       
-                    }
-                break;
-            case 'WhileStatement':
-                    processAst(node.body.body)
-                break;
-            case 'FunctionDeclaration':
-                    processAst(node.body.body)
-                break;
-            case 'FunctionExpression':
-                    processAst(node.body.body)
-                break;
-            case 'TryStatement':
-                processAst(node.block.body)
-                if (node.handler) {
-                    processAst(node.handler.body.body)
-                }
-                if (node.finalizer) {
-                    processAst(node.finalizer.body)
-                }
-                break;
-            default:
-                console.log('default')
-                break;
-        }
-    })
-}
-
-
-let output = generate(ast, {
-    sourceMaps: true
-});
-
-console.log(output.code)
-
-/*
-output = transform(output.code, {
-    plugins: ["C:\\elec\\labiba\\babel-plugin-labiba-transformer"]
-});
-*/
-
-//var ccccccc = transform(output.code)
-//console.log('---------------------------')
-
-//console.log(ccccccc)

@@ -221,7 +221,7 @@ const types = {
   _import: createKeyword("استيراد", {
     startsExpr
   }),
-  _null: createKeyword("null", {
+  _null: createKeyword("فارغ", {
     startsExpr
   }),
   _true: createKeyword("صح", {

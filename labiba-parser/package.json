@@ -1,13 +1,10 @@
 {
   "name": "labiba-parser",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "The Labiba parser",
   "author": "Sameh Fakoua <s.fakoua@gmail.com>",
-  "homepage": "https://www.qalamountools.com",
+  "homepage": "https://github.com/fakoua/labiba",
   "license": "MIT",
-  "publishConfig": {
-    "tag": "next"
-  },
   "keywords": [
     "labiba",
     "javascript",
@@ -15,9 +12,9 @@
     "arabic",
     "ecmascript"
   ],
-  "repository": "https://www.npmjs.com/package/labiba-parser",
+  "repository": "https://github.com/fakoua/labiba",
   "main": "lib/index.js",
-  "types": "typings/asx-parser.d.ts",
+  "types": "typings/labiba-parser.d.ts",
   "files": [
     "bin",
     "lib",

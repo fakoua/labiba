@@ -1402,11 +1402,6 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
 
-labiba-parser@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/labiba-parser/-/labiba-parser-0.0.1.tgz#41b08cf573e6114ef31bc81d6f0c511cfd3bacab"
-  integrity sha512-J2rbmbuul45rh2FQeRdSyNlRGxJfljrVV0VFdZWcQIF27HSNfPoS8u2aKMpSdJ/Bd3gPnncclc7+u5qZvCr9nQ==
-
 lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
