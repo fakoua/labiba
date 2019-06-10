@@ -11,6 +11,37 @@ export function declaration(node) {
     }
 }
 
+export function keywords() {
+    return [
+        {keyword: 'خروج', snipet: ''},
+        {keyword: 'حالة', snipet: ''},
+        {keyword: 'مشكلة', snipet: ''},
+        {keyword: 'اكمل', snipet: ''},
+        {keyword: 'افعل', snipet: ''},
+        {keyword: 'غير', snipet: ''},
+        {keyword: 'اخيرا', snipet: ''},
+        {keyword: 'تكرار', snipet: ''},
+        {keyword: 'مهمة', snipet: ''},
+        {keyword: 'اذا', snipet: 'اذا (${1:شرط}) {\n\t$0\n} غير {\n\t\n}'},
+        {keyword: 'ارجاع', snipet: ''},
+        {keyword: 'فاصل', snipet: ''},
+        {keyword: 'حاول', snipet: ''},
+        {keyword: 'متغير', snipet: ''},
+        {keyword: 'ثابت', snipet: ''},
+        {keyword: 'طالما', snipet: ''},
+        {keyword: 'جديد', snipet: ''},
+        {keyword: 'ابي', snipet: ''},
+        {keyword: 'صنف', snipet: ''},
+        {keyword: 'يرث', snipet: ''},
+        {keyword: 'استيراد', snipet: ''},
+        {keyword: 'فارغ', snipet: ''},
+        {keyword: 'صح', snipet: ''},
+        {keyword: 'غلط', snipet: ''},
+        {keyword: 'نوع', snipet: ''},
+        {keyword: 'عقيم', snipet: ''}
+    ]
+}
+
 export function transformGlobal(objectName) {
     const globalOject = {
         properties: [

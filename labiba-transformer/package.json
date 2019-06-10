@@ -19,7 +19,7 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
-    "labiba-parser": "^0.0.4",
+    "labiba-parser": "^0.0.5",
     "lodash": "^4.17.11"
   },
   "keywords": [

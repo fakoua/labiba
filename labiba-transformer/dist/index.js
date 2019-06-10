@@ -21,6 +21,10 @@ exports.transform = function (labibaCode) {
   return output.code;
 };
 
+exports.keywords = function () {
+  return labibaTransfrom.keywords();
+};
+
 function processTransfrom(node) {
   if (Array.isArray(node)) {
     node.forEach(function (subNode) {
@@ -76,6 +80,18 @@ function processNode(node) {
     if (node.type === 'Identifier') {
       if (node.name === 'غير_محدد') {
         node.name = 'undefined';
+      }
+
+      if (node.name === 'ثم') {
+        node.name = 'then';
+      }
+
+      if (node.name === 'لبيبة') {
+        node.name = 'smalltalk';
+      }
+
+      if (node.name === 'اسأل') {
+        node.name = 'prompt';
       }
     }
   }
