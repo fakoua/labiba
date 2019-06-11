@@ -1,5 +1,6 @@
 const $ = require('jquery');
 const la = require('labiba-transformer');
+const lo = require('lodash');
 
 let editor = null;
 
@@ -14,45 +15,142 @@ $(window).resize(function() {
 
 ///
 
-function getKeywords() {
-    let keywords = la.keywords();
+function getTokenizer() {
+    let keywords = la.language().find(la => {
+        return la.type === 'keyword'
+    }).properties;
+
     let res = [];
+
     keywords.forEach((k) => {
-        res.push([new RegExp(k.keyword, 'gi'), "custom-keyword"])
+        res.push([new RegExp(k.la, 'gi'), "custom-keyword"])
     });
+
+    let classes  = la.language().filter(la => {
+        return la.type === 'class'
+    })
+
+    classes.forEach((k) => {
+        res.push([new RegExp(k.la, 'gi'), "custom-class"])
+    });
+
+    let fields = [];
+    let all = la.language()
+    all.forEach(la => {
+        la.properties.forEach(prop => {
+            fields.push(prop)
+        })
+    })
+
+    fields = lo.uniqBy(fields, 'js');
+
+    fields = lo.sortBy(fields, [function(o) {
+        return o.la.length
+    }]).reverse()
+
+    fields.forEach((k) => {
+        res.push([new RegExp(k.la, 'gi'), "custom-field"])
+    });
+
+    //sorting
+    res.push([/\/\/.*/, "custom-comment"])
     return res;
 }
 
 function getCompletionItems() {
-    let keywords = la.keywords();
-    let withSnipets = keywords.filter((k) => {
-        return k.snipet !== ''
+    let keywords = la.language().find(la => {
+        return la.type === 'keyword'
+    }).properties;
+
+    let withSnippets = keywords.filter((k) => {
+        return k.snippet !== ''
     })
-    console.log(withSnipets)
-    let noSnipets = keywords.filter((k) => {
-        return k.snipet === ''
-    })
+
     let res = []
 
     keywords.forEach(k => {
         res.push({
-            label: k.keyword,
+            label: k.la,
             kind: monaco.languages.CompletionItemKind.Keyword, 
-            insertText: k.keyword, 
+            insertText: k.la, 
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
         })
     })
 
-    withSnipets.forEach(k => {
+    withSnippets.forEach(k => {
         res.push({
-            label: k.keyword,
+            label: k.la,
             kind: monaco.languages.CompletionItemKind.Snippet, 
-            insertText: k.snipet, 
+            insertText: k.snippet, 
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+        })
+        
+    })
+    
+    let globals = la.language().find(la => {
+        return la.type === 'global'
+    }).properties;
+
+    globals.forEach(k => {
+        res.push({
+            label: k.la,
+            kind: monaco.languages.CompletionItemKind.Function, 
+            insertText: k.snippet, 
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
         })
     })
-    
+
+    let classes = la.language().filter(la => {
+        return la.type === 'class'
+    })
+
+    classes.forEach(k => {
+        res.push({
+            label: k.la,
+            kind: monaco.languages.CompletionItemKind.Function, 
+            insertText: k.snippet, 
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+        })
+    })
+
     return res
+}
+
+
+// After dot
+function getCompletionFields(keyword) {
+    
+    let allFields = la.language().filter(f => {
+        return f.type === 'class'
+    })
+
+    let classFields = allFields.find(f => {
+        return f.la === keyword
+    })
+
+    let result = []
+    if (classFields) {
+        result = classFields.properties
+    } else {
+        allFields.forEach(f => {
+            f.properties.forEach(prop => {
+                result.push(prop)
+            })
+        })
+        result = lo.uniqBy(result, 'la')
+    }
+
+    //wrap into completion item
+    let rtnVal = [];
+    result.forEach(r => {
+        rtnVal.push({
+            label: r.la,
+            kind: monaco.languages.CompletionItemKind.Field, 
+            insertText: r.snippet, 
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
+        })
+    })
+    return rtnVal
 }
 
 function setLayout() {
@@ -88,7 +186,7 @@ function initEditor() {
         monaco.languages.register({ id: 'la' });
         monaco.languages.setMonarchTokensProvider('la', {
             tokenizer: {
-                root: getKeywords()
+                root: getTokenizer()
             }
         });
   
@@ -97,60 +195,19 @@ function initEditor() {
             base: 'vs',
             inherit: true,
             rules: [
-                { token: 'custom-info', foreground: '808080' },
-                { token: 'comment', foreground: 'ff0000', fontStyle: 'bold' },
+                { token: 'custom-class', foreground: '003184', fontStyle: 'bold' },
+                { token: 'custom-comment', foreground: '008000' },
                 { token: 'custom-keyword', foreground: '0000FF', fontStyle: 'bold' },
-                { token: 'custom-date', foreground: '008800' },
-                { token: 'sameh', foreground: 'FF0000' },
+                { token: 'custom-string', foreground: 'A31515' },
+                { token: 'custom-field', foreground: 'A31515' },
             ]
         });
         // Register a completion item provider for the new language
         monaco.languages.registerCompletionItemProvider('la', {
             triggerCharacters: ['.'],
             provideCompletionItems: function() {
-                //console.log(arguments[0].getWordAtPosition({column:1, lineNumber:2}))
-                var suggestions = [{
-                    label: 'سامح',
-                    kind: monaco.languages.CompletionItemKind.Text,
-                    insertText: 'سامح'
-                }, {
-                    label: 'مهمة',
-                    kind: monaco.languages.CompletionItemKind.Keyword,
-                    insertText: [
-                        'مهمة ${1:اسم} () {',
-                        '\t$0',
-                        '}'
-                    ].join('\n'),
-                    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet
-                }, {
-                    label: 'اذا',
-                    kind: monaco.languages.CompletionItemKind.Snippet,
-                    insertText: [
-                        'اذا (${1:شرط}) {',
-                        '\t$0',
-                        '} غير {',
-                        '\t',
-                        '}'
-                    ].join('\n'),
-                    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                    documentation: 'If-Else Statement'
-                }, {
-                    label: 'sameh',
-                    kind: monaco.languages.CompletionItemKind.Field,
-                    details: 'samhoun',
-                    documentation: 'Sameh Fakoua'
-                }, {
-                    label: 'الى_نص',
-                    kind: monaco.languages.CompletionItemKind.Field,
-                    insertText: 'الى_نص()',
-                    documentation: 'To String'
-                }
-                ];
-                
-                suggestions = getCompletionItems();
-
-                console.log(suggestions)
-                
+                var suggestions = getCompletionItems();
+               
                 let triggerKind = arguments[2].triggerKind;
                 let filtered = [];
   
@@ -159,32 +216,27 @@ function initEditor() {
                     let pos = arguments[1]
                     pos.column--;
                     let keyword = arguments[0].getWordAtPosition(pos);
-                    console.log(keyword)
-                    filtered = suggestions.filter((item) => {
-                        return item.kind === monaco.languages.CompletionItemKind.Field;
-                    });
+                    filtered = getCompletionFields(keyword.word)
+                    //console.log(filtered)
                 } else {
                     filtered = suggestions.filter((item) => {
                         return item.kind !== monaco.languages.CompletionItemKind.Field;
                     });
                 }
-                
-  
+    
                 return { suggestions: filtered };
             }
         });
 
         editor = monaco.editor.create(document.getElementById('editor'), {
-            value: [
-                'مهمة سامو(a) {', 
-                'console.log(a); console.log(sameh);',
-                '}',
-                'مهمة main() {',
-                'سامو("hi");',
-                'show()',
-                '}',
-                'مهمة show() { لبيبة.اسأل("Question", "How old are you?", "10").ثم((value) => { console.log(value); }).catch(() => { console.log("cancel"); }); }'
-            ].join('\n'),
+            value: `//@لبيبة
+
+مهمة اساسية() {
+    //اكتب برنامجك هنا
+
+}
+
+            `,
             automaticLayout: true,
             language: 'la',
             theme: 'la',

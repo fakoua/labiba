@@ -2,7 +2,7 @@
 
 var transformer = require('./index');
 
-var code = "\n\n//test\n\n\u0645\u062A\u063A\u064A\u0631 a = \u063A\u064A\u0631_\u0645\u062D\u062F\u062F\n\n\u0627\u0630\u0627 (a === \u063A\u064A\u0631_\u0645\u062D\u062F\u062F) {\n\n}\n\n\u0627\u0630\u0627 (a == \u063A\u064A\u0631_\u0645\u062D\u062F\u062F) {\n\n}\n";
+var code = "\n\n//test\n\n\u0645\u062A\u063A\u064A\u0631 c = \u0631\u0642\u0645._\u0646\u0627\u0642\u0635_\u063A\u064A\u0631_\u0645\u062A\u0646\u0627\u0647\u064A\n\n";
 var res = transformer.transform(code);
 console.log(res);
 var t = undefined;

@@ -21,8 +21,8 @@ exports.transform = function (labibaCode) {
   return output.code;
 };
 
-exports.keywords = function () {
-  return labibaTransfrom.keywords();
+exports.language = function () {
+  return labibaTransfrom.language();
 };
 
 function processTransfrom(node) {

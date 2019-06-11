@@ -4,15 +4,8 @@ const code = `
 
 //test
 
-متغير a = غير_محدد
+متغير c = رقم._ناقص_غير_متناهي
 
-اذا (a === غير_محدد) {
-
-}
-
-اذا (a == غير_محدد) {
-
-}
 `
 
 let res = transformer.transform(code)
@@ -42,3 +35,36 @@ console.log(f)
 var o = new Object(b)
 console.log(o)
 */
+
+do {
+
+} while(0)
+
+if (condition) {
+    
+} else {
+    
+}
+
+switch (key) {
+    case value:
+        
+        break;
+
+    default:
+        break;
+}
+
+var rr = new Array()
+
+Array.forEach()
+Array.sameh()
+
+rami.sameh()
+
+const c = new Boolean()
+
+var t = ralih()
+
+var a = Math.PI
+var aa = Math.sin(12)
