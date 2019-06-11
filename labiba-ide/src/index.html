@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
     <link href="../node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <style>
       body {
         overflow: hidden;
@@ -50,6 +51,9 @@ width: 100%;
   div.monaco-list-rows {
     direction: rtl !important;
   }
+  button {
+    font-family: "Segoe UI" !important;
+  }
     </style>
   </head>
   <body class="rtl">
@@ -58,7 +62,7 @@ width: 100%;
               <div class="collapse navbar-collapse">
                   <div class="btn-group" role="group" aria-label="Basic example">
                       <button id="ttt" type="button" class="btn btn-secondary">
-                          <span class="glyphicon glyphicon-ok"></span>
+                          تشغيل <span class="fas fa-play" style="transform: scaleX(-1);"></span>
                       </button>
                       <button type="button" class="btn btn-secondary">Middle</button>
                       <button type="button" class="btn btn-secondary">Right</button>
@@ -109,7 +113,6 @@ width: 100%;
     <script src='../node_modules/bootstrap-v4-rtl/dist/js/bootstrap.bundle.min.js'></script>
     <script src="editor.js"></script>
     <script>
-      var icons = require('glyphicons')
       const _ = require('jquery');
       _('#ttt').click(function() {
         const vm = require('vm');
