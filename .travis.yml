@@ -1,5 +1,5 @@
 language: node_js
 script:
-  - cd labiba-transformer
+  - cd labiba-parser
   - npm install
-  - npm run build
+  - gulp build
