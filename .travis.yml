@@ -1,5 +1,5 @@
 language: node_js
 script:
-  - cd labiba-ide
-  - npm install
-  - npm run dist
+  - cd labiba-transformer
+  - npm install --no-optional
+  - npm run build
