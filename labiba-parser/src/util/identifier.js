@@ -29,7 +29,7 @@ const reservedWordsStrictBindSet = new Set(
  * Checks if word is a reserved word in non-strict mode
  */
 export const isReservedWord = (word: string, inModule: boolean): boolean => {
-  return (inModule && word === "await") || word === "enum";
+  return (inModule && word === "انتظر") || word === "enum";
 };
 
 /**

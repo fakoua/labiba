@@ -2598,7 +2598,7 @@ export default (superClass: Class<Parser>): Class<Parser> =>
     ): N.Expression {
       if (
         base.type === "Identifier" &&
-        base.name === "async" &&
+        base.name === "غير_متزامن" &&
         this.state.noArrowAt.indexOf(startPos) !== -1
       ) {
         this.next();
@@ -2609,7 +2609,7 @@ export default (superClass: Class<Parser>): Class<Parser> =>
         base = this.finishNode(node, "CallExpression");
       } else if (
         base.type === "Identifier" &&
-        base.name === "async" &&
+        base.name === "غير_متزامن" &&
         this.isRelational("<")
       ) {
         const state = this.state.clone();

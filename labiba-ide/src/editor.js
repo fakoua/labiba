@@ -1,4 +1,3 @@
-const $ = require('jquery');
 const la = require('labiba-transformer');
 const lo = require('lodash');
 
@@ -231,10 +230,7 @@ function initEditor() {
         editor = monaco.editor.create(document.getElementById('editor'), {
             value: `//@لبيبة
 
-مهمة اساسية() {
-    //اكتب برنامجك هنا
-
-}
+            lib.message('hello')
 
             `,
             automaticLayout: true,

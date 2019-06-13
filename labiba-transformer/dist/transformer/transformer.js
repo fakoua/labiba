@@ -9,8 +9,6 @@ exports.transformGlobal = transformGlobal;
 exports.tranformNew = tranformNew;
 exports.transformMember = transformMember;
 
-var _fs = require("fs");
-
 var _lodash = _interopRequireDefault(require("lodash"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -141,6 +139,14 @@ function language() {
       js: 'null',
       la: 'عقيم',
       snippet: ''
+    }, {
+      js: 'async',
+      la: 'غير_متزامن',
+      snippet: 'غير_متزامن'
+    }, {
+      js: 'await',
+      la: 'انتظر',
+      snippet: 'انتظر'
     }]
   }, {
     type: 'global',
@@ -925,6 +931,28 @@ function language() {
       snippet: 'الى_نص',
       autoComplete: true
     }]
+  }, {
+    type: 'class',
+    js: 'labiba',
+    la: 'لبيبة',
+    newable: false,
+    snippet: 'لبيبة',
+    properties: [{
+      js: 'ask',
+      la: 'اسأل',
+      snippet: 'اسأل',
+      autoComplete: true
+    }, {
+      js: 'alert',
+      la: 'انذر',
+      snippet: 'انذر',
+      autoComplete: true
+    }, {
+      js: 'sound',
+      la: 'نغمة',
+      snippet: 'نغمة(${1:النغمة}, ${2:الوقت})',
+      autoComplete: true
+    }]
   }];
 }
 
@@ -965,6 +993,7 @@ function transformMember(objectName, propertyName) {
     });
   });
   globalOject = _lodash["default"].unionBy(globalOject, 'js'); //////////////////////
+  //TODO: read it dynamically
 
   var numberObject = language().find(function (la) {
     return la.js === 'Number';
@@ -975,7 +1004,10 @@ function transformMember(objectName, propertyName) {
   var mathObject = language().find(function (la) {
     return la.js === 'Math';
   });
-  var jsFunctions = [mathObject, jsonObject, numberObject]; /////////////////////////////////////////
+  var labibaObject = language().find(function (la) {
+    return la.js === 'labiba';
+  });
+  var jsFunctions = [mathObject, jsonObject, numberObject, labibaObject]; /////////////////////////////////////////
 
   function getObjectName(objectName) {
     var found = jsFunctions.find(function (el) {

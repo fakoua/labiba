@@ -16,7 +16,8 @@ exports.transform = function (labibaCode) {
   var ast = (0, _labibaParser.parse)(labibaCode);
   processTransfrom(ast);
   var output = (0, _generator["default"])(ast, {
-    sourceMaps: true
+    sourceMaps: true,
+    retainFunctionParens: true
   });
   return output.code;
 };
@@ -84,14 +85,6 @@ function processNode(node) {
 
       if (node.name === 'ثم') {
         node.name = 'then';
-      }
-
-      if (node.name === 'لبيبة') {
-        node.name = 'smalltalk';
-      }
-
-      if (node.name === 'اسأل') {
-        node.name = 'prompt';
       }
     }
   }

@@ -15,6 +15,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
+  // win.removeMenu()
   win.loadFile('src/index.html')
 
   // Open the DevTools.

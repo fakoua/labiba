@@ -663,8 +663,8 @@ const types$1 = {
   parenStatement: new TokContext("(", false),
   parenExpression: new TokContext("(", true),
   template: new TokContext("`", true, true, p => p.readTmplToken()),
-  functionExpression: new TokContext("function", true),
-  functionStatement: new TokContext("function", false)
+  functionExpression: new TokContext("مهمة", true),
+  functionStatement: new TokContext("مهمة", false)
 };
 
 types.parenR.updateContext = types.braceR.updateContext = function () {
@@ -675,7 +675,7 @@ types.parenR.updateContext = types.braceR.updateContext = function () {
 
   let out = this.state.context.pop();
 
-  if (out === types$1.braceStatement && this.curContext().token === "function") {
+  if (out === types$1.braceStatement && this.curContext().token === "مهمة") {
     out = this.state.context.pop();
   }
 
@@ -743,7 +743,7 @@ const reservedWords = {
 const reservedWordsStrictSet = new Set(reservedWords.strict);
 const reservedWordsStrictBindSet = new Set(reservedWords.strict.concat(reservedWords.strictBind));
 const isReservedWord = (word, inModule) => {
-  return inModule && word === "await" || word === "enum";
+  return inModule && word === "انتظر" || word === "enum";
 };
 function isStrictReservedWord(word, inModule) {
   return isReservedWord(word, inModule) || reservedWordsStrictSet.has(word);
@@ -2790,13 +2790,13 @@ var flow = (superClass => class extends superClass {
   }
 
   parseSubscripts(base, startPos, startLoc, noCalls) {
-    if (base.type === "Identifier" && base.name === "async" && this.state.noArrowAt.indexOf(startPos) !== -1) {
+    if (base.type === "Identifier" && base.name === "غير_متزامن" && this.state.noArrowAt.indexOf(startPos) !== -1) {
       this.next();
       const node = this.startNodeAt(startPos, startLoc);
       node.callee = base;
       node.arguments = this.parseCallExpressionArguments(types.parenR, false);
       base = this.finishNode(node, "CallExpression");
-    } else if (base.type === "Identifier" && base.name === "async" && this.isRelational("<")) {
+    } else if (base.type === "Identifier" && base.name === "غير_متزامن" && this.isRelational("<")) {
       const state = this.state.clone();
       let error;
 
@@ -6108,45 +6108,6 @@ var placeholders = (superClass => class extends superClass {
 
 });
 
-var labiba = (superClass => class extends superClass {
-  parseVar(node, isFor, kind) {
-    let res = super.parseVar(...arguments);
-    res.kind = this.labibaKind(res.kind);
-    return res;
-  }
-
-  parseFunctionId() {
-    let res = super.parseFunctionId(...arguments);
-    return res;
-  }
-
-  parseMaybeAssign(noIn, refShorthandDefaultPos, afterLeftParse, refNeedsArrowPos) {
-    let res = super.parseMaybeAssign(...arguments);
-    let memberExp = res.type === 'CallExpression' ? res.callee : res;
-    memberExp.object.name = "SASSS";
-    memberExp.property.name = "TATA";
-    console.log;
-    return res;
-  }
-
-  labibaKind(kind) {
-    switch (kind) {
-      case 'متغير':
-        return 'var';
-
-      case 'ثابت':
-        return 'const';
-
-      case 'مقيد':
-        return 'let';
-
-      default:
-        return kind;
-    }
-  }
-
-});
-
 function hasPlugin(plugins, name) {
   return plugins.some(plugin => {
     if (Array.isArray(plugin)) {
@@ -6200,8 +6161,7 @@ const mixinPlugins = {
   jsx,
   flow,
   typescript,
-  placeholders,
-  labiba
+  placeholders
 };
 const mixinPluginNames = Object.keys(mixinPlugins);
 
@@ -8406,8 +8366,8 @@ class ExpressionParser extends LValParser {
         this.next();
 
         if (op === types.pipeline && this.getPluginOption("pipelineOperator", "proposal") === "minimal") {
-          if (this.match(types.name) && this.state.value === "await" && this.scope.inAsync) {
-            throw this.raise(this.state.start, `Unexpected "await" after pipeline body; await must have parentheses in minimal proposal`);
+          if (this.match(types.name) && this.state.value === "انتظر" && this.scope.inAsync) {
+            throw this.raise(this.state.start, `Unexpected "انتظر" after pipeline body; await must have parentheses in minimal proposal`);
           }
         }
 
@@ -8443,7 +8403,7 @@ class ExpressionParser extends LValParser {
   }
 
   parseMaybeUnary(refShorthandDefaultPos) {
-    if (this.isContextual("await") && (this.scope.inAsync || !this.scope.inFunction && this.options.allowAwaitOutsideFunction)) {
+    if (this.isContextual("انتظر") && (this.scope.inAsync || !this.scope.inFunction && this.options.allowAwaitOutsideFunction)) {
       return this.parseAwait();
     } else if (this.state.type.prefix) {
       const node = this.startNode();
@@ -8647,7 +8607,7 @@ class ExpressionParser extends LValParser {
   }
 
   atPossibleAsync(base) {
-    return base.type === "Identifier" && base.name === "async" && this.state.lastTokEnd === base.end && !this.canInsertSemicolon() && this.input.slice(base.start, base.end) === "async";
+    return base.type === "Identifier" && base.name === "غير_متزامن" && this.state.lastTokEnd === base.end && !this.canInsertSemicolon() && this.input.slice(base.start, base.end) === "غير_متزامن";
   }
 
   finishCallExpression(node) {
@@ -8787,10 +8747,10 @@ class ExpressionParser extends LValParser {
           const containsEsc = this.state.containsEsc;
           const id = this.parseIdentifier();
 
-          if (!containsEsc && id.name === "async" && this.match(types._function) && !this.canInsertSemicolon()) {
+          if (!containsEsc && id.name === "غير_متزامن" && this.match(types._function) && !this.canInsertSemicolon()) {
             this.next();
             return this.parseFunction(node, undefined, true);
-          } else if (canBeArrow && !containsEsc && id.name === "async" && this.match(types.name) && !this.canInsertSemicolon()) {
+          } else if (canBeArrow && !containsEsc && id.name === "غير_متزامن" && this.match(types.name) && !this.canInsertSemicolon()) {
             const params = [this.parseIdentifier()];
             this.expect(types.arrow);
             this.parseArrowExpression(node, params, true);
@@ -8944,7 +8904,7 @@ class ExpressionParser extends LValParser {
     const node = this.startNode();
     let meta = this.startNode();
     this.next();
-    meta = this.createIdentifier(meta, "function");
+    meta = this.createIdentifier(meta, "مهمة");
 
     if (this.scope.inGenerator && this.eat(types.dot)) {
       return this.parseMetaProperty(node, meta, "sent");
@@ -8956,7 +8916,7 @@ class ExpressionParser extends LValParser {
   parseMetaProperty(node, meta, propertyName) {
     node.meta = meta;
 
-    if (meta.name === "function" && propertyName === "sent") {
+    if (meta.name === "مهمة" && propertyName === "sent") {
       if (this.isContextual(propertyName)) {
         this.expectPlugin("functionSent");
       } else if (!this.hasPlugin("functionSent")) {
@@ -9236,7 +9196,7 @@ class ExpressionParser extends LValParser {
   }
 
   isAsyncProp(prop) {
-    return !prop.computed && prop.key.type === "Identifier" && prop.key.name === "async" && (this.match(types.name) || this.match(types.num) || this.match(types.string) || this.match(types.bracketL) || this.state.type.keyword || this.match(types.star)) && !this.hasPrecedingLineBreak();
+    return !prop.computed && prop.key.type === "Identifier" && prop.key.name === "غير_متزامن" && (this.match(types.name) || this.match(types.num) || this.match(types.string) || this.match(types.bracketL) || this.state.type.keyword || this.match(types.star)) && !this.hasPrecedingLineBreak();
   }
 
   parseObjectMember(isPattern, refShorthandDefaultPos) {
@@ -9583,7 +9543,7 @@ class ExpressionParser extends LValParser {
     } else if (this.state.type.keyword) {
       name = this.state.type.keyword;
 
-      if ((name === "class" || name === "function") && (this.state.lastTokEnd !== this.state.lastTokStart + 1 || this.input.charCodeAt(this.state.lastTokStart) !== dot)) {
+      if ((name === "class" || name === "مهمة") && (this.state.lastTokEnd !== this.state.lastTokStart + 1 || this.input.charCodeAt(this.state.lastTokStart) !== dot)) {
         this.state.context.pop();
       }
     } else {
@@ -9603,7 +9563,7 @@ class ExpressionParser extends LValParser {
       this.raise(startLoc, "Can not use 'yield' as identifier inside a generator");
     }
 
-    if (this.scope.inAsync && word === "await") {
+    if (this.scope.inAsync && word === "انتظر") {
       this.raise(startLoc, "Can not use 'await' as identifier inside an async function");
     }
 
@@ -9618,7 +9578,7 @@ class ExpressionParser extends LValParser {
     const reservedTest = !this.state.strict ? isReservedWord : isBinding ? isStrictBindReservedWord : isStrictReservedWord;
 
     if (reservedTest(word, this.inModule)) {
-      if (!this.scope.inAsync && word === "await") {
+      if (!this.scope.inAsync && word === "انتظر") {
         this.raise(startLoc, "Can not use keyword 'await' outside an async function");
       }
 
@@ -10159,7 +10119,7 @@ class StatementParser extends ExpressionParser {
     this.state.labels.push(loopLabel);
     let awaitAt = -1;
 
-    if ((this.scope.inAsync || !this.scope.inFunction && this.options.allowAwaitOutsideFunction) && this.eatContextual("await")) {
+    if ((this.scope.inAsync || !this.scope.inFunction && this.options.allowAwaitOutsideFunction) && this.eatContextual("انتظر")) {
       awaitAt = this.state.lastTokStart;
     }
 
@@ -10778,7 +10738,7 @@ class StatementParser extends ExpressionParser {
       } else {
         this.pushClassProperty(classBody, publicProp);
       }
-    } else if (isSimple && key.name === "async" && !containsEsc && !this.isLineTerminator()) {
+    } else if (isSimple && key.name === "غير_متزامن" && !containsEsc && !this.isLineTerminator()) {
       const isGenerator = this.eat(types.star);
       method.kind = "method";
       this.parseClassPropertyName(method);
@@ -10999,11 +10959,11 @@ class StatementParser extends ExpressionParser {
 
   maybeParseExportDeclaration(node) {
     if (this.shouldParseExportDeclaration()) {
-      if (this.isContextual("async")) {
+      if (this.isContextual("غير_متزامن")) {
         const next = this.lookahead();
 
         if (next.type !== types._function) {
-          this.unexpected(next.start, `Unexpected token, expected "function"`);
+          this.unexpected(next.start, `Unexpected token, expected "مهمة"`);
         }
       }
 
@@ -11017,7 +10977,9 @@ class StatementParser extends ExpressionParser {
   }
 
   isAsyncFunction() {
-    if (!this.isContextual("async")) return false;
+    if (!this.isContextual("غير_متزامن")) {
+      return false;
+    }
     const {
       pos
     } = this.state;
@@ -11025,7 +10987,7 @@ class StatementParser extends ExpressionParser {
     const skip = skipWhiteSpace.exec(this.input);
     if (!skip || !skip.length) return false;
     const next = pos + skip[0].length;
-    return !lineBreak.test(this.input.slice(pos, next)) && this.input.slice(next, next + 8) === "function" && (next + 8 === this.length || !isIdentifierChar(this.input.charCodeAt(next + 8)));
+    return !lineBreak.test(this.input.slice(pos, next)) && this.input.slice(next, next + 4) === "مهمة" && (next + 4 === this.length || !isIdentifierChar(this.input.charCodeAt(next + 4)));
   }
 
   parseExportDefaultExpression() {
@@ -11064,7 +11026,7 @@ class StatementParser extends ExpressionParser {
 
   isExportDefaultSpecifier() {
     if (this.match(types.name)) {
-      return this.state.value !== "async" && this.state.value !== "let";
+      return this.state.value !== "غير_متزامن" && this.state.value !== "let";
     }
 
     if (!this.match(types._default)) {
@@ -11103,7 +11065,7 @@ class StatementParser extends ExpressionParser {
       }
     }
 
-    return this.state.type.keyword === "var" || this.state.type.keyword === "const" || this.state.type.keyword === "function" || this.state.type.keyword === "class" || this.isLet() || this.isAsyncFunction();
+    return this.state.type.keyword === "var" || this.state.type.keyword === "const" || this.state.type.keyword === "مهمة" || this.state.type.keyword === "class" || this.isLet() || this.isAsyncFunction();
   }
 
   checkExport(node, checkNames, isDefault, isFrom) {

@@ -494,7 +494,7 @@ export default class StatementParser extends ExpressionParser {
     if (
       (this.scope.inAsync ||
         (!this.scope.inFunction && this.options.allowAwaitOutsideFunction)) &&
-      this.eatContextual("await")
+      this.eatContextual("انتظر")
     ) {
       awaitAt = this.state.lastTokStart;
     }
@@ -1390,7 +1390,7 @@ export default class StatementParser extends ExpressionParser {
       }
     } else if (
       isSimple &&
-      key.name === "async" &&
+      key.name === "غير_متزامن" &&
       !containsEsc &&
       !this.isLineTerminator()
     ) {
@@ -1398,7 +1398,7 @@ export default class StatementParser extends ExpressionParser {
       const isGenerator = this.eat(tt.star);
 
       method.kind = "method";
-      // The so-called parsed name would have been "async": get the real name.
+      // The so-called parsed name would have been "غير_متزامن": get the real name.
       this.parseClassPropertyName(method);
 
       if (method.key.type === "PrivateName") {
@@ -1735,12 +1735,12 @@ export default class StatementParser extends ExpressionParser {
 
   maybeParseExportDeclaration(node: N.Node): boolean {
     if (this.shouldParseExportDeclaration()) {
-      if (this.isContextual("async")) {
+      if (this.isContextual("غير_متزامن")) {
         const next = this.lookahead();
 
         // export async;
         if (next.type !== tt._function) {
-          this.unexpected(next.start, `Unexpected token, expected "function"`);
+          this.unexpected(next.start, `Unexpected token, expected "مهمة"`);
         }
       }
 
@@ -1754,7 +1754,7 @@ export default class StatementParser extends ExpressionParser {
   }
 
   isAsyncFunction(): boolean {
-    if (!this.isContextual("async")) return false;
+    if (!this.isContextual("غير_متزامن")) {return false};
 
     const { pos } = this.state;
 
@@ -1767,9 +1767,9 @@ export default class StatementParser extends ExpressionParser {
 
     return (
       !lineBreak.test(this.input.slice(pos, next)) &&
-      this.input.slice(next, next + 8) === "function" &&
-      (next + 8 === this.length ||
-        !isIdentifierChar(this.input.charCodeAt(next + 8)))
+      this.input.slice(next, next + 4) === "مهمة" &&
+      (next + 4 === this.length ||
+        !isIdentifierChar(this.input.charCodeAt(next + 4)))
     );
   }
 
@@ -1824,7 +1824,7 @@ export default class StatementParser extends ExpressionParser {
 
   isExportDefaultSpecifier(): boolean {
     if (this.match(tt.name)) {
-      return this.state.value !== "async" && this.state.value !== "let";
+      return this.state.value !== "غير_متزامن" && this.state.value !== "let";
     }
 
     if (!this.match(tt._default)) {
@@ -1873,7 +1873,7 @@ export default class StatementParser extends ExpressionParser {
     return (
       this.state.type.keyword === "var" ||
       this.state.type.keyword === "const" ||
-      this.state.type.keyword === "function" ||
+      this.state.type.keyword === "مهمة" ||
       this.state.type.keyword === "class" ||
       this.isLet() ||
       this.isAsyncFunction()

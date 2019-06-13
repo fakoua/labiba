@@ -1156,19 +1156,6 @@ keyv@^3.0.0:
   dependencies:
     json-buffer "3.0.0"
 
-labiba-parser@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/labiba-parser/-/labiba-parser-0.0.5.tgz#4f8a583231e417866a88862330d2aa84a2bb6767"
-  integrity sha512-bVQMXSaNsBnyclnQfy1twy9SaO13QSKp6bQLTuQdjIWafv9zPOEvkb2v28je61wgHa7CK7oRUdmq6LvTeS2U9g==
-
-labiba-transformer@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/labiba-transformer/-/labiba-transformer-0.0.6.tgz#6a07e51fb48b3fb8fd8fe20574a70592eac72b8e"
-  integrity sha512-YOT/OWZIAa8qHVGEU+XN5XMoSErRtyj3U4+ScTT8MbJl4uka9I90oWgZOwMfE4ty9Ci0EovA/mD8EAl1HY0dVA==
-  dependencies:
-    labiba-parser "^0.0.5"
-    lodash "^4.17.11"
-
 latest-version@^5.0.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-5.1.0.tgz#119dfe908fe38d15dfa43ecd13fa12ec8832face"

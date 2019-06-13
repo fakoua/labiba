@@ -1,14 +1,16 @@
 import {parse} from 'labiba-parser';
 import generate from '@babel/generator';
+
 import * as labibaTransfrom from './transformer/transformer';
 
 exports.transform = function (labibaCode) {
     const ast = parse(labibaCode)
     processTransfrom(ast)
+ 
     let output = generate(ast, {
-        sourceMaps: true
+        sourceMaps: true,
+        retainFunctionParens: true
     });
-    
     return output.code
 }
 
@@ -73,12 +75,6 @@ function processNode(node) {
             }
             if (node.name === 'ثم') {
                 node.name = 'then'
-            }
-            if (node.name === 'لبيبة') {
-                node.name = 'smalltalk'
-            }
-            if (node.name === 'اسأل') {
-                node.name = 'prompt'
             }
         }
     }

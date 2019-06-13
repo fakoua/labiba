@@ -365,12 +365,12 @@ export default class ExpressionParser extends LValParser {
         ) {
           if (
             this.match(tt.name) &&
-            this.state.value === "await" &&
+            this.state.value === "انتظر" &&
             this.scope.inAsync
           ) {
             throw this.raise(
               this.state.start,
-              `Unexpected "await" after pipeline body; await must have parentheses in minimal proposal`,
+              `Unexpected "انتظر" after pipeline body; await must have parentheses in minimal proposal`,
             );
           }
         }
@@ -450,7 +450,7 @@ export default class ExpressionParser extends LValParser {
 
   parseMaybeUnary(refShorthandDefaultPos: ?Pos): N.Expression {
     if (
-      this.isContextual("await") &&
+      this.isContextual("انتظر") &&
       (this.scope.inAsync ||
         (!this.scope.inFunction && this.options.allowAwaitOutsideFunction))
     ) {
@@ -722,10 +722,10 @@ export default class ExpressionParser extends LValParser {
   atPossibleAsync(base: N.Expression): boolean {
     return (
       base.type === "Identifier" &&
-      base.name === "async" &&
+      base.name === "غير_متزامن" &&
       this.state.lastTokEnd === base.end &&
       !this.canInsertSemicolon() &&
-      this.input.slice(base.start, base.end) === "async"
+      this.input.slice(base.start, base.end) === "غير_متزامن"
     );
   }
 
@@ -900,7 +900,7 @@ export default class ExpressionParser extends LValParser {
 
         if (
           !containsEsc &&
-          id.name === "async" &&
+          id.name === "غير_متزامن" &&
           this.match(tt._function) &&
           !this.canInsertSemicolon()
         ) {
@@ -909,7 +909,7 @@ export default class ExpressionParser extends LValParser {
         } else if (
           canBeArrow &&
           !containsEsc &&
-          id.name === "async" &&
+          id.name === "غير_متزامن" &&
           this.match(tt.name) &&
           !this.canInsertSemicolon()
         ) {
@@ -1079,13 +1079,13 @@ export default class ExpressionParser extends LValParser {
     const node = this.startNode();
 
     // We do not do parseIdentifier here because when parseFunctionExpression
-    // is called we already know that the current token is a "name" with the value "function"
+    // is called we already know that the current token is a "name" with the value "مهمة"
     // This will improve perf a tiny little bit as we do not do validation but more importantly
     // here is that parseIdentifier will remove an item from the expression stack
-    // if "function" or "class" is parsed as identifier (in objects e.g.), which should not happen here.
+    // if "مهمة" or "class" is parsed as identifier (in objects e.g.), which should not happen here.
     let meta = this.startNode();
     this.next();
-    meta = this.createIdentifier(meta, "function");
+    meta = this.createIdentifier(meta, "مهمة");
 
     if (this.scope.inGenerator && this.eat(tt.dot)) {
       return this.parseMetaProperty(node, meta, "sent");
@@ -1100,7 +1100,7 @@ export default class ExpressionParser extends LValParser {
   ): N.MetaProperty {
     node.meta = meta;
 
-    if (meta.name === "function" && propertyName === "sent") {
+    if (meta.name === "مهمة" && propertyName === "sent") {
       if (this.isContextual(propertyName)) {
         this.expectPlugin("functionSent");
       } else if (!this.hasPlugin("functionSent")) {
@@ -1452,7 +1452,7 @@ export default class ExpressionParser extends LValParser {
     return (
       !prop.computed &&
       prop.key.type === "Identifier" &&
-      prop.key.name === "async" &&
+      prop.key.name === "غير_متزامن" &&
       (this.match(tt.name) ||
         this.match(tt.num) ||
         this.match(tt.string) ||
@@ -2020,7 +2020,7 @@ export default class ExpressionParser extends LValParser {
       // If the previous token is a dot, this does not apply because the
       // context-managing code already ignored the keyword
       if (
-        (name === "class" || name === "function") &&
+        (name === "class" || name === "مهمة") &&
         (this.state.lastTokEnd !== this.state.lastTokStart + 1 ||
           this.input.charCodeAt(this.state.lastTokStart) !== charCodes.dot)
       ) {
@@ -2057,7 +2057,7 @@ export default class ExpressionParser extends LValParser {
       );
     }
 
-    if (this.scope.inAsync && word === "await") {
+    if (this.scope.inAsync && word === "انتظر") {
       this.raise(
         startLoc,
         "Can not use 'await' as identifier inside an async function",
@@ -2081,7 +2081,7 @@ export default class ExpressionParser extends LValParser {
       : isStrictReservedWord;
 
     if (reservedTest(word, this.inModule)) {
-      if (!this.scope.inAsync && word === "await") {
+      if (!this.scope.inAsync && word === "انتظر") {
         this.raise(
           startLoc,
           "Can not use keyword 'await' outside an async function",

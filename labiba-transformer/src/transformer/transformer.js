@@ -1,4 +1,3 @@
-import { truncate } from "fs";
 import _ from 'lodash';
 
 export function declaration(node) {
@@ -47,7 +46,9 @@ export function language() {
                 {js: 'true', la: 'صح', snippet: ''},
                 {js: 'false', la: 'غلط', snippet: ''},
                 {js: 'typeof', la: 'نوع', snippet: ''},
-                {js: 'null', la: 'عقيم', snippet: ''} 
+                {js: 'null', la: 'عقيم', snippet: ''},
+                {js: 'async', la: 'غير_متزامن', snippet: 'غير_متزامن'},
+                {js: 'await', la: 'انتظر', snippet: 'انتظر'} 
             ]
         },
         {
@@ -282,6 +283,17 @@ export function language() {
                 {js: 'parse', la: 'حلل', snippet: 'حلل', autoComplete: true},
                 {js: 'stringify', la: 'الى_نص', snippet: 'الى_نص', autoComplete: true},
             ]
+        }, {
+            type: 'class',
+            js: 'labiba',
+            la: 'لبيبة',
+            newable: false,
+            snippet: 'لبيبة',
+            properties:[
+                {js: 'ask', la: 'اسأل', snippet: 'اسأل', autoComplete: true},
+                {js: 'alert', la: 'انذر', snippet: 'انذر', autoComplete: true},
+                {js: 'sound', la: 'نغمة', snippet: 'نغمة(${1:النغمة}, ${2:الوقت})', autoComplete: true},
+            ]
         }
     ]
 }
@@ -328,6 +340,8 @@ export function transformMember(objectName, propertyName) {
     globalOject = _.unionBy(globalOject, 'js')
     //////////////////////
    
+    //TODO: read it dynamically
+    
     const numberObject = language().find(la => {
         return la.js === 'Number'
     })
@@ -339,10 +353,16 @@ export function transformMember(objectName, propertyName) {
     const mathObject = language().find(la => {
         return la.js === 'Math'
     })
+
+    const labibaObject = language().find(la => {
+        return la.js === 'labiba'
+    })
+
     const jsFunctions = [
         mathObject,
         jsonObject,
-        numberObject
+        numberObject,
+        labibaObject
     ];
 /////////////////////////////////////////
 
