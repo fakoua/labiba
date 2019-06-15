@@ -154,7 +154,7 @@ function getCompletionFields(keyword) {
 
 function setLayout() {
     let w = $(window).width() - 222;
-    let h = $(window).height() - 90;
+    let h = $(window).height() - 140;
     $('#editor').width(w);
     $('#editor').height(h);
 }
@@ -163,7 +163,7 @@ function initEditor() {
     const path = require('path');
     const amdLoader = require('../node_modules/monaco-editor/min/vs/loader.js');
     const amdRequire = amdLoader.require;
-    const amdDefine = amdLoader.require.define;
+    //const amdDefine = amdLoader.require.define;
     function uriFromPath(_path) {
         var pathName = path.resolve(_path).replace(/\\/g, '/');
         if (pathName.length > 0 && pathName.charAt(0) !== '/') {
@@ -182,8 +182,39 @@ function initEditor() {
     amdRequire(['vs/editor/editor.main'], function() {
 
 
-        monaco.languages.register({ id: 'la' });
+        monaco.languages.register(
+          {
+            id: 'la'
+          });
+
+          monaco.languages.setLanguageConfiguration('la', {
+            autoClosingPairs: [
+                { open: '{', close: '}' },
+                { open: '[', close: ']' },
+                { open: '(', close: ')' },
+                { open: '"', close: '"', notIn: ['string'] },
+                { open: '\'', close: '\'', notIn: ['string', 'comment'] },
+                { open: '`', close: '`', notIn: ['string', 'comment'] },
+                { open: "/**", close: " */", notIn: ["string"] }
+            ],
+          });
+
         monaco.languages.setMonarchTokensProvider('la', {
+            defaultToken: 'invalid',
+            
+            comments: {
+                lineComment: '//',
+                blockComment: ['/*', '*/']
+            },
+            string_double: [
+                [/[^\\"]+/, 'string'],
+                [/\\./, 'string.escape.invalid'],
+            ],
+            bracketCounting: [
+                [/\{/, 'delimiter.bracket', '@bracketCounting'],
+                [/\}/, 'delimiter.bracket', '@pop'],
+                { include: 'common' }
+            ],
             tokenizer: {
                 root: getTokenizer()
             }
@@ -230,7 +261,8 @@ function initEditor() {
         editor = monaco.editor.create(document.getElementById('editor'), {
             value: `//@لبيبة
 
-            lib.message('hello')
+            ثابت
+            const
 
             `,
             automaticLayout: true,
