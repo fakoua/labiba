@@ -1,0 +1,56 @@
+body {
+    overflow: hidden;
+    font-family: "Segoe UI";
+  }
+.page {
+display: table;
+width: 100%;
+}
+.toolbar {
+  margin-top: 40px !important;
+}
+.navbar {
+  padding:0;
+}
+.page-content,
+.sidebar {
+  display: table-cell;
+}
+.sidebar {
+  width: 220px;
+  background-color: aliceblue;
+}
+
+  .view-line {
+  padding-right: 30px;
+}
+  .view-lines, .view-line, .has-selection, .mtk1, .view-line span, .view-line span span {
+      direction: rtl;
+      text-align: right;
+  }
+
+  .main-container {
+    margin-top:24px;
+  }
+  .container-fluid {
+    padding-left:0 !important;
+    margin-left:0 !important;
+    padding-right:0 !important;
+    margin-right:0 !important;
+  }
+  #editor {
+    direction: ltr;
+    width: 600px;
+    height: 400px;
+    outline: 1px solid gray;
+  }
+  div.monaco-list-rows {
+    direction: rtl !important;
+  }
+  button {
+    font-family: "Segoe UI" !important;
+  }
+  .as-menu {
+    padding:8px;
+    
+  }

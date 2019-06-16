@@ -1,6 +1,6 @@
 {
   "name": "labiba-ide",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/main.js",
   "license": "MIT",
   "scripts": {
@@ -26,10 +26,16 @@
   "build": {
     "appId": "labiba",
     "productName": "Labiba IDE",
+    "fileAssociations": {
+      "ext": "la",
+      "name": "لغة لبيبة",
+      "icon": "src/static/images/icon.png"
+    },
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "icon": "src/static/images/icon.png"
     },
     "nsis": {
       "deleteAppDataOnUninstall": true,

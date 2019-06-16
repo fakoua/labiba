@@ -180,14 +180,13 @@ function initEditor() {
 
     
     amdRequire(['vs/editor/editor.main'], function() {
-
-
         monaco.languages.register(
           {
             id: 'la'
           });
 
           monaco.languages.setLanguageConfiguration('la', {
+            wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
             autoClosingPairs: [
                 { open: '{', close: '}' },
                 { open: '[', close: ']' },
@@ -197,19 +196,24 @@ function initEditor() {
                 { open: '`', close: '`', notIn: ['string', 'comment'] },
                 { open: "/**", close: " */", notIn: ["string"] }
             ],
-          });
-
-        monaco.languages.setMonarchTokensProvider('la', {
-            defaultToken: 'invalid',
-            
+            folding: {
+                markers: {
+                    start: new RegExp("^\\s*//\\s*#?region\\b"),
+                    end: new RegExp("^\\s*//\\s*#?endregion\\b")
+                }
+            },
+            brackets: [
+                ['{', '}'],
+                ['[', ']'],
+                ['(', ')']
+            ],
             comments: {
                 lineComment: '//',
                 blockComment: ['/*', '*/']
-            },
-            string_double: [
-                [/[^\\"]+/, 'string'],
-                [/\\./, 'string.escape.invalid'],
-            ],
+            }
+          });
+
+        monaco.languages.setMonarchTokensProvider('la', {
             bracketCounting: [
                 [/\{/, 'delimiter.bracket', '@bracketCounting'],
                 [/\}/, 'delimiter.bracket', '@pop'],
