@@ -1,0 +1,5 @@
+language: node_js
+script:
+  - cd labiba-transformer
+  - npm install --no-optional
+  - npm run build
