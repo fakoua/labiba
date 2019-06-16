@@ -8,23 +8,25 @@ Labiba Parser generates AST according to babel AST format
 
 ## Example:
 ```sh
-import {parse} from 'labiba-parser';
-
+const labiba = require('labiba-parser');
+ 
 let labibaCode =`
 //Comment
 متغير سامح = 1;
 مهمة مثل() {
     ارجاع 'مرحبا';
 }
-
+ 
 مثل()
 `
-
-let ast = parse(labibaCode)
-
+ 
+let ast = labiba.parse(labibaCode)
+ 
 console.log(ast)
 
 ```
+## repl.it
+[https://repl.it/@SamehFakoua/Labiba-Parser-Example](https://repl.it/@SamehFakoua/Labiba-Parser-Example)
 
 ## Install
 
