@@ -2,6 +2,18 @@ body {
     overflow: hidden;
     font-family: "Segoe UI";
   }
+
+.textcolor-white {
+  color: white;
+}
+.backcolor-primary {
+  background-color: #FDB3C4 !important;
+}
+
+.backcolor-secondary {
+
+}
+  
 .page {
 display: table;
 width: 100%;

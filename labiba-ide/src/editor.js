@@ -264,10 +264,8 @@ function initEditor() {
 
         editor = monaco.editor.create(document.getElementById('editor'), {
             value: `//@لبيبة
-
-            ثابت
-            const
-
+ثابت جملة = "مرحبا بك في لبيبة"
+انتظر لبيبة.انذار(جملة)
             `,
             automaticLayout: true,
             language: 'la',

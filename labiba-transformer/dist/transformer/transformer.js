@@ -944,8 +944,8 @@ function language() {
       autoComplete: true
     }, {
       js: 'alert',
-      la: 'انذر',
-      snippet: 'انذر',
+      la: 'انذار',
+      snippet: 'انذار',
       autoComplete: true
     }, {
       js: 'sound',

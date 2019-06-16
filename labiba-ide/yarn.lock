@@ -1654,10 +1654,10 @@ labiba-parser@^0.0.6:
   resolved "https://registry.yarnpkg.com/labiba-parser/-/labiba-parser-0.0.6.tgz#05af803413ee1e63864d09ed0bcbbbfb66e894fe"
   integrity sha512-qFwrSPPt/HORmAOAyW9URxXj5/wJ4h4dlwJK1JtOzgwI4+q/uzvid/pwPD+ErLhj1KgpCyMXzFenGidKsLL5PA==
 
-labiba-transformer@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/labiba-transformer/-/labiba-transformer-0.0.7.tgz#a384c14589e9afa5b9b7c7cb64c19628a8a88d96"
-  integrity sha512-2Y1GK1dDD1s+uGlOqZluj5dI1DcA8FyBwiAzVFjuj0IrmTvfsEC6PzUcqKryHiAioaiPMXMg2H11+mnwOjGMjA==
+labiba-transformer@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/labiba-transformer/-/labiba-transformer-0.0.9.tgz#597214116b4ddc159f4ab095c06653bb94f8dc2e"
+  integrity sha512-ui50kSnVpteMP405ME4dubuNkDC0Om5ALBo3lBDXD9gKJSYVlhhei9+vHggltScXz7Lzev6xvW2T70KxWfcTCA==
   dependencies:
     labiba-parser "^0.0.6"
     lodash "^4.17.11"

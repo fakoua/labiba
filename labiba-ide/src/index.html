@@ -8,7 +8,7 @@
   </head>
   <body>
 
-    <div class="ui fixed menu red">
+    <div class="ui fixed menu backcolor-primary">
       <div class="ui dropdown as-menu">
         <div class="text">ملف</div>
         <i class="dropdown icon"></i>
@@ -27,17 +27,17 @@
             حفظ بإسم ...
           </div>
           <div class="divider"></div>
-          <div class="item">خروج</div>
+          <div id="btnClose" class="item">خروج</div>
         </div>
       </div>
     </div>
 
-    <div class="ui menu toolbar red">
+    <div class="ui menu toolbar">
       <div class="item">
-        <div id="btnRun" class="ui primary button">تشخيل</div>
-      </div>
-      <div class="item">
-        <div class="ui button">Log-in</div>
+        <div id="btnRun" class="ui button backcolor-primary">
+          تشغيل
+          <i class="caret square right icon"></i>
+        </div>
       </div>
     </div>
 
@@ -132,6 +132,13 @@
             console.log(content)
             console.log(file)
             fs.writeFileSync(file[0], content, 'utf-8')
+          })
+
+          $('#btnClose').click(function(e) {
+            e.preventDefault();
+            const remote = require('electron').remote
+            let w = remote.getCurrentWindow()
+            w.close()
           })
       }
     </script>

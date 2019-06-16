@@ -291,7 +291,7 @@ export function language() {
             snippet: 'لبيبة',
             properties:[
                 {js: 'ask', la: 'اسأل', snippet: 'اسأل', autoComplete: true},
-                {js: 'alert', la: 'انذر', snippet: 'انذر', autoComplete: true},
+                {js: 'alert', la: 'انذار', snippet: 'انذار', autoComplete: true},
                 {js: 'sound', la: 'نغمة', snippet: 'نغمة(${1:النغمة}, ${2:الوقت})', autoComplete: true},
             ]
         }
