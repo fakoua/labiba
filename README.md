@@ -1,3 +1,7 @@
-<div style="direction:rtl; text-align:right;">
-# انها لبيبة
-</div>
+#لبيبة
+
+لغة البرمجة لبيبة باللغة العربية هي أو لغة برمجة متكاملة متوافقة مع جافاسكريبت 7
+
+---
+
+تحميل النسخة التجريبية: [تحميل](https://github.com/fakoua/labiba/releases) 
