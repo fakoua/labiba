@@ -1,6 +1,6 @@
 {
   "name": "labiba-ide",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "src/main.js",
   "author": {
     "name": "Sameh Fakoua",
@@ -15,6 +15,7 @@
   "dependencies": {
     "dialogs": "^2.0.1",
     "jquery": "^3.4.1",
+    "labiba-transformer": "^0.1.2",
     "lodash": "^4.17.11",
     "monaco-editor": "^0.17.0",
     "split.js": "^1.5.11",
