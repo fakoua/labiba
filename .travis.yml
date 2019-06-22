@@ -15,4 +15,4 @@ script:
   - cd ..
   - cd labiba-ide
   - npm install
-  - npm run build
+  - npm run dist
