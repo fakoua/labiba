@@ -7,10 +7,12 @@ script:
   - cd labiba-transformer
   - npm install --no-optional
   - webpack
+  - cd ..
   - cd labiba-parser
   - npm install
   - npm install gulp
   - gulp build
+  - cd ..
   - cd labiba-ide
   - npm install
   - npm run build
