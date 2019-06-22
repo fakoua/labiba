@@ -5,3 +5,9 @@ script:
   - cd labiba-transformer
   - npm install --no-optional
   - webpack
+  - cd labiba-parser
+  - npm install
+  - gulp build
+  - cd labiba-ide
+  - npm install
+  - npm run build
