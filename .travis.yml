@@ -9,6 +9,7 @@ script:
   - webpack
   - cd labiba-parser
   - npm install
+  - npm install gulp
   - gulp build
   - cd labiba-ide
   - npm install
