@@ -3,34 +3,35 @@ body {
     font-family: "Segoe UI";
   }
 
+  #editor {
+    float: right;
+  }
+
+  #output {
+    float:left;
+  }
+  #splitter {
+    float: right;
+    width: 10px;
+    cursor: ew-resize;
+    background-color: #590D32;
+  }
+
 .textcolor-white {
-  color: white;
+  color: white !important;
 }
 .backcolor-primary {
-  background-color: #FDB3C4 !important;
+  background-color: #85144B !important;
 }
 
 .backcolor-secondary {
-
-}
-  
-.page {
-display: table;
-width: 100%;
+  background-color: #EB7AB1 !important;
 }
 .toolbar {
   margin-top: 40px !important;
 }
 .navbar {
   padding:0;
-}
-.page-content,
-.sidebar {
-  display: table-cell;
-}
-.sidebar {
-  width: 220px;
-  background-color: aliceblue;
 }
 
   .view-line {
@@ -41,19 +42,9 @@ width: 100%;
       text-align: right;
   }
 
-  .main-container {
-    margin-top:24px;
-  }
-  .container-fluid {
-    padding-left:0 !important;
-    margin-left:0 !important;
-    padding-right:0 !important;
-    margin-right:0 !important;
-  }
+  
   #editor {
     direction: ltr;
-    width: 600px;
-    height: 400px;
     outline: 1px solid gray;
   }
   div.monaco-list-rows {
@@ -66,3 +57,59 @@ width: 100%;
     padding:8px;
     
   }
+
+#output {
+  background-color: #85144B;
+  color:white;
+  overflow-x: hidden; 
+}
+
+/* OUTPUT */
+#output > div {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#output div input[type=text] {
+  background-color:transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px dotted white;
+  color:white;
+}
+
+#output div button {
+  background-color:transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+#output div input[type=text]:focus {
+  outline:none;
+}
+#output div input:disabled, #output div button:disabled , #output div select:disabled{
+  background-color: #58144B;
+  color: rgba(255, 255, 255, .5);
+  outline-color: rgba(255, 255, 255, .5);
+  border-color: rgba(255, 255, 255, .5);
+}
+
+#output div select {
+  background-color:transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px dotted white;
+  color: white;
+}
+
+#output div select option {
+  background-color: #590D32;
+}
+.split, .gutter.gutter-horizontal {
+  float: left;
+}
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
+}

@@ -153,10 +153,18 @@ function getCompletionFields(keyword) {
 }
 
 function setLayout() {
-    let w = $(window).width() - 222;
-    let h = $(window).height() - 140;
+    let outputWidth = 350;
+    let splitterWidth = 10;
+    let w = $(window).width() - outputWidth - splitterWidth;
+    let h = $(window).height() - 120;
     $('#editor').width(w);
     $('#editor').height(h);
+    $('#output').height(h); //-20 due to padding
+    $('#splitter').height(h);
+    $('#output').width(outputWidth);
+    if (editor) {
+        editor.layout()
+    }
 }
 
 function initEditor() {
@@ -267,7 +275,7 @@ function initEditor() {
 ثابت جملة = "مرحبا بك في لبيبة"
 انتظر لبيبة.انذار(جملة)
             `,
-            automaticLayout: true,
+            automaticLayout: false,
             language: 'la',
             theme: 'la',
             fontSize: 14,

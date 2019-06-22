@@ -8,7 +8,7 @@
   </head>
   <body>
 
-    <div class="ui fixed menu backcolor-primary">
+    <div class="ui fixed menu backcolor-primary textcolor-white">
       <div class="ui dropdown as-menu">
         <div class="text">ملف</div>
         <i class="dropdown icon"></i>
@@ -30,117 +30,45 @@
           <div id="btnClose" class="item">خروج</div>
         </div>
       </div>
+      <div class="ui dropdown as-menu">
+        <div class="text">اسألوا لبيبة</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item">مساعدة</div>
+          <div class="item">
+              <i class="dropdown icon"></i>
+            أمثلة
+            <div class="menu">
+                <div class="item" data-file="hello-world">مرحبا لبيبة</div>
+                <div class="item" data-file="age-calculator">العمر</div>
+                <div class="item" data-file="bmi">مؤشر الوزن الطبيعي</div>
+                <div class="item">Adobe Creative Cloud</div>
+                <div class="item">Private FTP</div>
+                <div class="item">Another Service...</div>
+              </div>
+          </div>
+          <div class="divider"></div>
+          <div class="item">حول البرنامج</div>
+        </div>
+      </div>
     </div>
 
-    <div class="ui menu toolbar">
+    <div class="ui menu toolbar ">
       <div class="item">
-        <div id="btnRun" class="ui button backcolor-primary">
+        <div id="btnRun" class="ui button backcolor-primary textcolor-white">
           تشغيل
           <i class="caret square right icon"></i>
         </div>
       </div>
     </div>
 
-     <div class="container-fluid main-container">
-        <div class="page">
-          <div class="page-content">
-              <div class="row">
-                  <div class="col">
-                      <div id="editor">
-                      </div>
-                  </div>
-                </div>
-          </div>
-          <div class="sidebar">
-            side
-          </div>
-        </div>
+     <div id="container">
+            <div id="editor">
+            </div>
+            <div id="splitter"></div>
+            <div id="output">
+            </div>
       </div>
-    <script>
-      var jQuery
-      const $ = require('jquery')     
-      const labiba = require('./labiba-lib') 
-      
-      $(document).ready(function() {
-        jQuery = $
-        $('<script/>',{type:'text/javascript', src:'static/theme/semantic.min.js'}).appendTo('body');
-        $('<script/>',{type:'text/javascript', src:'editor.js'}).appendTo('body');
-        pageLoad()
-      })
-      
-      function pageLoad() {
-        $('.ui.dropdown').dropdown({
-          action: 'select'
-        });
-
-        $('#btnRun').click(function() {
-          const vm = require('vm');
-          const la = require('labiba-transformer')
-          let code = editor.getValue();
-          
-          code = `غير_متزامن مهمة runner(labiba) {
-              ${code}
-            };
-            runner(labiba);
-          `
-          code = la.transform(code);
-          console.log(code)
-          var res =  vm.runInThisContext(code, 'sam.js');
-          //sandbox.main()
-        })
-
-
-        $('#btnTest').click(function() {
-          const Dialogs = require('dialogs')
-          const dialogs = Dialogs()
-          dialogs.alert('okidoki', ok => {
-            console.log('alert', ok)
-            dialogs.confirm('ok?', ok => {
-              console.log('confirm', ok)
-              dialogs.prompt('username', 'joe.smith@gmail.com', ok => {
-                console.log('prompt with default', ok)
-                dialogs.prompt('username', ok => {
-                  console.log('prompt', ok)
-                })
-              })
-            })
-          })
-        })
-
-
-        $('#btnOpen').click(function(e) {
-          e.preventDefault();
-          const fs = require("fs")
-          const electron = require('electron').remote
-          const dialog = electron.dialog
-          let file = dialog.showOpenDialog({ filters: [{name: 'لبيبة', extensions: ['la']}], properties: ['openFile'] })
-          fs.readFile(file[0], function (err, data) {
-              if (err) {
-                return console.error(err);
-              }
-              editor.setValue(data.toString())
-            });
-          })
-
-          $('#btnSaveAs').click(function(e) {
-            e.preventDefault();
-            const fs = require("fs")
-            const electron = require('electron').remote
-            const dialog = electron.dialog
-            let file = dialog.showSaveDialog({ filters: [{name: 'لبيبة', extensions: ['la']}]})
-            let content = editor.getValue()
-            console.log(content)
-            console.log(file)
-            fs.writeFileSync(file[0], content, 'utf-8')
-          })
-
-          $('#btnClose').click(function(e) {
-            e.preventDefault();
-            const remote = require('electron').remote
-            let w = remote.getCurrentWindow()
-            w.close()
-          })
-      }
-    </script>
+    <script src="./index.js"></script>
   </body>
 </html>

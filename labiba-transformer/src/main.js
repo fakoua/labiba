@@ -53,7 +53,6 @@ function processNode(node) {
                 node.callee.property.name=member.propertyName
             } else {
                 // Global Functions
-                console.log('Global Functions')
                 node.callee.name=labibaTransfrom.transformGlobal(node.callee.name);
             }
             

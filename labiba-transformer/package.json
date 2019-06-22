@@ -1,27 +1,30 @@
 {
   "name": "labiba-transformer",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "description": "Labiba Transformer",
   "author": "Sameh Fakoua <s.fakoua@gmail.com>",
   "homepage": "https://github.com/fakoua/labiba",
   "repository": "https://github.com/fakoua/labiba",
-  "main": "dist/index.js",
+  "main": "dist/index.bundle.js",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "webpack",
     "start": "yarn build & node dist\\index.js",
     "test": "yarn build & node dist\\test.js"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "babel-core": "7.0.0-bridge.0"
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.6",
+    "lodash-loader": "^2.0.0",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
   },
   "dependencies": {
+    "acorn": "^6.1.1",
     "labiba-parser": "^0.0.6",
-    "lodash": "^4.17.11",
-    "regenerator": "^0.14.1"
+    "lodash": "^4.17.11"
   },
   "keywords": [
     "labiba",
@@ -29,5 +32,6 @@
     "parser",
     "arabic",
     "ecmascript"
-  ]
+  ],
+  "runkitExample1": "runkit.js"
 }

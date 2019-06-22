@@ -294,6 +294,19 @@ export function language() {
                 {js: 'alert', la: 'انذار', snippet: 'انذار', autoComplete: true},
                 {js: 'sound', la: 'نغمة', snippet: 'نغمة(${1:النغمة}, ${2:الوقت})', autoComplete: true},
             ]
+        }, {
+            type: 'class',
+            js: 'labibaConsole',
+            la: 'لوحة',
+            newable: false,
+            snippet: 'لوحة',
+            properties:[
+                {js: 'print', la: 'اطبع', snippet: 'اطبع()', autoComplete: true},
+                {js: 'clear', la: 'تفريغ', snippet: 'تفريغ()', autoComplete: true},
+                {js: 'askText', la: 'اسأل_نص', snippet: 'اسأل_نص()', autoComplete: true},
+                {js: 'askYesNo', la: 'اسأل_نعم_لا', snippet: 'اسأل_نعم_لا()', autoComplete: true},
+                {js: 'askMultiple', la: 'اسأل_لائحة', snippet: 'اسأل_لائحة()', autoComplete: true},
+            ]
         }
     ]
 }
@@ -321,12 +334,10 @@ export function tranformNew(objectName) {
     let found = newObject.find((el) => {
         return el.la === objectName;
     });
-
     return found ? found.js : objectName;
 }
 
 export function transformMember(objectName, propertyName) {
-
     // globalObject as d.getDate() in case d is date, Math.sin is not inculded
     let gObjects = language().filter(la => {
         return la.type === 'class' && la.newable
@@ -358,11 +369,16 @@ export function transformMember(objectName, propertyName) {
         return la.js === 'labiba'
     })
 
+    const labibaConsoleObject = language().find(la => {
+        return la.js === 'labibaConsole'
+    })
+
     const jsFunctions = [
         mathObject,
         jsonObject,
         numberObject,
-        labibaObject
+        labibaObject,
+        labibaConsoleObject
     ];
 /////////////////////////////////////////
 
