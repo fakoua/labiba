@@ -11,12 +11,9 @@
 <p dir='rtl' align='right'>
 تحميل النسخة التجريبية: [تحميل](https://github.com/fakoua/labiba/releases) 
 </p>
----
 
 <p dir='rtl' align='right'>
 مثال
 </p>
 
-<p dir='rtl' align='right'>
 ![مثال](https://raw.githubusercontent.com/fakoua/labiba/master/resources/example.png)
-</p>  
