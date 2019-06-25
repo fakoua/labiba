@@ -6,7 +6,6 @@ install:
 before_script:
   - npm install -g gulp-cli
 script:
-  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
   - codecov
   - cd labiba-transformer
   - npm install --no-optional
