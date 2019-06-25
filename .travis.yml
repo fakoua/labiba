@@ -2,19 +2,19 @@ language: node_js
 node_js:
     - "12"
 install:
-  - npm install -g codecov
-before_script:
   - npm install -g gulp-cli
 script:
-  - codecov
+  - # ======== labiba-transformer
   - cd labiba-transformer
   - npm install --no-optional
   - webpack
+  - # ======== labiba-parser
   - cd ..
   - cd labiba-parser
   - npm install
   - npm install gulp
   - gulp build
+  - # ======== labiba-ide
   - cd ..
   - cd labiba-ide
   - npm install
