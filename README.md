@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/fakoua/labiba.svg?branch=master)](https://travis-ci.org/fakoua/labiba)
 <h2>
 <p dir='rtl' align='right'>
 لبيبة
