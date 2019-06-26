@@ -1324,10 +1324,10 @@ labiba-parser@^0.0.6:
   resolved "https://registry.yarnpkg.com/labiba-parser/-/labiba-parser-0.0.6.tgz#05af803413ee1e63864d09ed0bcbbbfb66e894fe"
   integrity sha512-qFwrSPPt/HORmAOAyW9URxXj5/wJ4h4dlwJK1JtOzgwI4+q/uzvid/pwPD+ErLhj1KgpCyMXzFenGidKsLL5PA==
 
-labiba-transformer@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/labiba-transformer/-/labiba-transformer-0.1.2.tgz#0949139ced7572ce1aa7cc42f2d32a593487540f"
-  integrity sha512-RbJKnYU27LwMHj+T+1CF08qETceLyTzJlSAre8fxVWupYCJY90gHokpRfaUnzsFz9ByyPDWhJb6NTNYN7DthYQ==
+labiba-transformer@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/labiba-transformer/-/labiba-transformer-0.1.3.tgz#eb7f80299f6976a099556396b032387418bb8264"
+  integrity sha512-OLlKNtsJ74OL3mWKFAZBZRtZOI0Ovxh4FhJs87wh+B9pxHVizCaRuVxONN+cGF7GqvPp5ur2+H7CLKB6Qv+R6w==
   dependencies:
     acorn "^6.1.1"
     labiba-parser "^0.0.6"

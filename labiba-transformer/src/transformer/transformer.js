@@ -304,6 +304,10 @@ export function language() {
                 {js: 'print', la: 'اطبع', snippet: 'اطبع()', autoComplete: true},
                 {js: 'clear', la: 'تفريغ', snippet: 'تفريغ()', autoComplete: true},
                 {js: 'askText', la: 'اسأل_نص', snippet: 'اسأل_نص()', autoComplete: true},
+                {js: 'askDate', la: 'اسأل_تاريخ', snippet: 'اسأل_تاريخ()', autoComplete: true},
+                {js: 'askNumber', la: 'اسأل_رقم', snippet: 'اسأل_رقم()', autoComplete: true},
+                {js: 'askRange', la: 'اسأل_نطاق', snippet: 'اسأل_نطاق()', autoComplete: true},
+                {js: 'askColor', la: 'اسأل_لون', snippet: 'اسأل_لون()', autoComplete: true},
                 {js: 'askYesNo', la: 'اسأل_نعم_لا', snippet: 'اسأل_نعم_لا()', autoComplete: true},
                 {js: 'askMultiple', la: 'اسأل_لائحة', snippet: 'اسأل_لائحة()', autoComplete: true},
             ]

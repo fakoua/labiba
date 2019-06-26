@@ -13,7 +13,20 @@ $(window).resize(function() {
 });
 
 ///
+function getKeywords() {
+    let keywords = la.language().find(la => {
+        return la.type === 'keyword'
+    }).properties;
 
+    let res = [];
+
+    keywords.forEach((k) => {
+        res.push(k.la)
+    });
+    res.push('لبيبة')
+    res.push('لوحة')
+    return res;
+}
 function getTokenizer() {
     let keywords = la.language().find(la => {
         return la.type === 'keyword'
@@ -22,7 +35,7 @@ function getTokenizer() {
     let res = [];
 
     keywords.forEach((k) => {
-        res.push([new RegExp(k.la, 'gi'), "custom-keyword"])
+        res.push([new RegExp(k.la), "custom-keyword"])
     });
 
     let classes  = la.language().filter(la => {
@@ -30,7 +43,7 @@ function getTokenizer() {
     })
 
     classes.forEach((k) => {
-        res.push([new RegExp(k.la, 'gi'), "custom-class"])
+        res.push([new RegExp(k.la), "custom-class"])
     });
 
     let fields = [];
@@ -48,12 +61,56 @@ function getTokenizer() {
     }]).reverse()
 
     fields.forEach((k) => {
-        res.push([new RegExp(k.la, 'gi'), "custom-field"])
+        res.push([new RegExp(k.la), "custom-field"])
     });
 
     //sorting
     res.push([/\/\/.*/, "custom-comment"])
     return res;
+}
+
+function getTokenizerV2() {
+    let keywords = la.language().find(la => {
+        return la.type === 'keyword'
+    }).properties;
+
+    let res = [];
+
+    keywords.forEach((k) => {
+        res.push(k.la)
+    });
+
+    let classes  = la.language().filter(la => {
+        return la.type === 'class'
+    })
+
+    classes.forEach((k) => {
+        res.push(k.la)
+    });
+
+    let fields = [];
+    let all = la.language()
+    all.forEach(la => {
+        la.properties.forEach(prop => {
+            fields.push(prop)
+        })
+    })
+
+    fields = lo.uniqBy(fields, 'js');
+
+    fields = lo.sortBy(fields, [function(o) {
+        return o.la.length
+    }]).reverse()
+
+    fields.forEach((k) => {
+        res.push(k.la)
+    });
+
+    //sorting
+    //res.push([/\/\/.*/, "custom-comment"])
+
+    let reg = lo.join(res, '|');
+    return new RegExp(reg)
 }
 
 function getCompletionItems() {
@@ -194,7 +251,33 @@ function initEditor() {
           });
 
           monaco.languages.setLanguageConfiguration('la', {
-            wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
+            wordPattern1: /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
+            onEnterRules: [{
+                beforeText: /^\s*\/\*\*(?!\/)([^\*]|\*(?!\/))*$/,
+                afterText: /^\s*\*\/$/,
+                action: {
+                    indentAction: monaco.languages.IndentAction.IndentOutdent,
+                    appendText: " * "
+                }
+            }, {
+                beforeText: /^\s*\/\*\*(?!\/)([^\*]|\*(?!\/))*$/,
+                action: {
+                    indentAction: monaco.languages.IndentAction.None,
+                    appendText: " * "
+                }
+            }, {
+                beforeText: /^(\t|(\ \ ))*\ \*(\ ([^\*]|\*(?!\/))*)?$/,
+                action: {
+                    indentAction: monaco.languages.IndentAction.None,
+                    appendText: "* "
+                }
+            }, {
+                beforeText: /^(\t|(\ \ ))*\ \*\/\s*$/,
+                action: {
+                    indentAction: monaco.languages.IndentAction.None,
+                    removeText: 1
+                }
+            }],
             autoClosingPairs: [
                 { open: '{', close: '}' },
                 { open: '[', close: ']' },
@@ -222,13 +305,132 @@ function initEditor() {
           });
 
         monaco.languages.setMonarchTokensProvider('la', {
+            operators: ["<=", ">=", "==", "!=", "===", "!==", "=>", "+", "-", "**", "*", "/", "%", "++", "--", "<<", "</", ">>", ">>>", "&", "|", "^", "!", "~", "&&", "||", "?", ":", "=", "+=", "-=", "*=", "**=", "/=", "%=", "<<=", ">>=", ">>>=", "&=", "|=", "^=", "@"],
+            symbols: /[=><!~؟:&|+\-*\/\^%]+/,
             bracketCounting: [
                 [/\{/, 'delimiter.bracket', '@bracketCounting'],
                 [/\}/, 'delimiter.bracket', '@pop'],
                 { include: 'common' }
             ],
+            digits:/\d+(_+\d+)*/,
+            octaldigits: /[0-7]+(_+[0-7]+)*/,
+            binarydigits: /[0-1]+(_+[0-1]+)*/,
+            hexdigits: /[[0-9a-fA-F]+(_+[0-9a-fA-F]+)*/,
+            regexpctl: /[(){}\[\]\$\^|\-*+?\.]/,
+            regexpesc: /\\(?:[bBdDfnrstvwWn0\\\/]|@regexpctl|c[A-Z]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4})/,
+            escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+            typeKeywords: ["any", "منطقي", "رقم", "كائن", "نص", "غير_معروف"],
+            keywords: getKeywords(),
             tokenizer: {
-                root: getTokenizer()
+                root: [
+                    [/[{}]/, "delimiter.bracket"], {
+                        include: "common"
+                    }
+                ],
+                common: [
+                    [getTokenizerV2(), {
+                        cases: {
+                            "@typeKeywords": "keyword",
+                            "@keywords": "keyword",
+                            "@default": "identifier"
+                        }
+                    }],
+                    [/[A-Z][\w\$]*/, "type.identifier"], {
+                        include: "@whitespace"
+                    },
+                    [/\/(?=([^\\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/, {
+                        token: "regexp",
+                        bracket: "@open",
+                        next: "@regexp"
+                    }],
+                    [/[()\[\]]/, "@brackets"],
+                    [/!(?=([^=]|$))/, "delimiter"],
+                    [/(@digits)[eE]([\-+]?(@digits))?/, "number.float"],
+                    [/(@digits)\.(@digits)([eE][\-+]?(@digits))?/, "number.float"],
+                    [/0[xX](@hexdigits)/, "number.hex"],
+                    [/0[oO]?(@octaldigits)/, "number.octal"],
+                    [/0[bB](@binarydigits)/, "number.binary"],
+                    [/(@digits)/, "number"],
+                    [/[;,.]/, "delimiter"],
+                    [/"([^"\\]|\\.)*$/, "string.invalid"],
+                    [/'([^'\\]|\\.)*$/, "string.invalid"],
+                    [/"/, "string", "@string_double"],
+                    [/'/, "string", "@string_single"],
+                    [/`/, "string", "@string_backtick"]
+                ],
+                whitespace: [
+                    [/[ \t\r\n]+/, ""],
+                    [/\/\*\*(?!\/)/, "comment.doc", "@jsdoc"],
+                    [/\/\*/, "comment", "@comment"],
+                    [/\/\/.*$/, "comment"]
+                ],
+                comment: [
+                    [/[^\/*]+/, "comment"],
+                    [/\*\//, "comment", "@pop"],
+                    [/[\/*]/, "comment"]
+                ],
+                jsdoc: [
+                    [/[^\/*]+/, "comment.doc"],
+                    [/\*\//, "comment.doc", "@pop"],
+                    [/[\/*]/, "comment.doc"]
+                ],
+                regexp: [
+                    [/(\{)(\d+(?:,\d*)?)(\})/, ["regexp.escape.control", "regexp.escape.control", "regexp.escape.control"]],
+                    [/(\[)(\^?)(?=(?:[^\]\\\/]|\\.)+)/, ["regexp.escape.control", {
+                        token: "regexp.escape.control",
+                        next: "@regexrange"
+                    }]],
+                    [/(\()(\?:|\?=|\?!)/, ["regexp.escape.control", "regexp.escape.control"]],
+                    [/[()]/, "regexp.escape.control"],
+                    [/@regexpctl/, "regexp.escape.control"],
+                    [/[^\\\/]/, "regexp"],
+                    [/@regexpesc/, "regexp.escape"],
+                    [/\\\./, "regexp.invalid"],
+                    [/(\/)([gimsuy]*)/, [{
+                        token: "regexp",
+                        bracket: "@close",
+                        next: "@pop"
+                    }, "keyword.other"]]
+                ],
+                regexrange: [
+                    [/-/, "regexp.escape.control"],
+                    [/\^/, "regexp.invalid"],
+                    [/@regexpesc/, "regexp.escape"],
+                    [/[^\]]/, "regexp"],
+                    [/\]/, {
+                        token: "regexp.escape.control",
+                        next: "@pop",
+                        bracket: "@close"
+                    }]
+                ],
+                string_double: [
+                    [/[^\\"]+/, "string"],
+                    [/@escapes/, "string.escape"],
+                    [/\\./, "string.escape.invalid"],
+                    [/"/, "string", "@pop"]
+                ],
+                string_single: [
+                    [/[^\\']+/, "string"],
+                    [/@escapes/, "string.escape"],
+                    [/\\./, "string.escape.invalid"],
+                    [/'/, "string", "@pop"]
+                ],
+                string_backtick: [
+                    [/\$\{/, {
+                        token: "delimiter.bracket",
+                        next: "@bracketCounting"
+                    }],
+                    [/[^\\`$]+/, "string"],
+                    [/@escapes/, "string.escape"],
+                    [/\\./, "string.escape.invalid"],
+                    [/`/, "string", "@pop"]
+                ],
+                bracketCounting: [
+                    [/\{/, "delimiter.bracket", "@bracketCounting"],
+                    [/\}/, "delimiter.bracket", "@pop"], {
+                        include: "common"
+                    }
+                ]
             }
         });
   
@@ -278,7 +480,7 @@ function initEditor() {
             automaticLayout: false,
             language: 'la',
             theme: 'la',
-            fontSize: 14,
+            fontSize: 16,
             fontFamily: "Tahoma",
             lineNumbers: "on",
             smoothScrolling: true,
@@ -292,5 +494,19 @@ function initEditor() {
                 side: "left"
             }
         });
+        let condition = editor.createContextKey('trueCondition', false);
+        editor.addCommand(monaco.KeyCode.LeftArrow, function() {
+            let pos = editor.getPosition();
+            pos.column +=1;
+            editor.setPosition(pos);
+        }, 'trueCondition');
+
+        editor.addCommand(monaco.KeyCode.RightArrow, function() {
+            let pos = editor.getPosition();
+            pos.column -=1;
+            editor.setPosition(pos);
+        }, 'trueCondition');
+
+        condition.set(true);
     });
 }

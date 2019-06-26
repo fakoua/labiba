@@ -1,3 +1,3 @@
-export function cli(args) {
+module.exports.cli =  function (args) {
     console.log(args)
 }

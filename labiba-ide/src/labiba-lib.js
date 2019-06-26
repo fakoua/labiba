@@ -27,35 +27,28 @@ module.exports.alert = async function(msg) {
 }
 
 module.exports.askText = async function(msg) {
-    let id = getRandomId();
-    let inputId = `input-${id}`
-    let buttonId = `button-${id}`
-    let html = ` &gt; ${msg}: <input type='text' id='${inputId}' /><button id='${buttonId}'>أدخل</button>`
-    appendHtml(html, 'input')
-    
-    let btn = document.getElementById(buttonId)
-    let txt = document.getElementById(inputId)
-    txt.focus()
-    return new Promise(function(resolve, reject) {
-        btn.addEventListener('click', function func_() {
-          btn.removeEventListener('click', func_)
-          let val = txt.value
-          btn.setAttribute("disabled", "disabled")
-          txt.setAttribute("disabled", "disabled")
-          resolve(val)
-        })
-        txt.addEventListener("keydown", function keydown_(event) {
-          if (event.keyCode === 13) {
-            txt.removeEventListener('keydown', keydown_);
-            let val = txt.value
-            btn.setAttribute("disabled", "disabled")
-            txt.setAttribute("disabled", "disabled")
-            resolve(val)
-          }
-        });
-    })
+    return await generateInput('text', msg)
+}
+
+  module.exports.askDate = async function(msg) {
+    let dt = await generateInput('date', msg);
+    return new Date(dt)
   }
 
+  module.exports.askNumber = async function(msg) {
+    let nb = await generateInput('number', msg)
+    return parseInt(nb)
+  }
+
+  module.exports.askRange = async function(msg, min, max, step) {
+    let extra = `min='${min}' max='${max}' step='${step}'`
+    let nb = await generateInput('range', msg, extra)
+    return parseInt(nb)
+  }
+
+  module.exports.askColor = async function(msg) {
+    return await generateInput('color', msg)
+}
   module.exports.clear = async function() {
     let output = document.getElementById('output');
     output.innerHTML = '';
@@ -133,3 +126,34 @@ function getRandomId() {
     var id = number.toString(36).substr(2, 9); // 'xtis06h6'
     return id
   }
+
+async function generateInput(type, msg, extra) {
+  let att = extra ? extra : ''
+  let id = getRandomId();
+  let inputId = `input-${id}`
+  let buttonId = `button-${id}`
+  let html = ` &gt; ${msg}: <input type='${type}' id='${inputId}' ${att}/><button id='${buttonId}'>أدخل</button>`
+  appendHtml(html, 'input')
+  
+  let btn = document.getElementById(buttonId)
+  let txt = document.getElementById(inputId)
+  txt.focus()
+  return new Promise(function(resolve, reject) {
+      btn.addEventListener('click', function func_() {
+        btn.removeEventListener('click', func_)
+        let val = txt.value
+        btn.setAttribute("disabled", "disabled")
+        txt.setAttribute("disabled", "disabled")
+        resolve(val)
+      })
+      txt.addEventListener("keydown", function keydown_(event) {
+        if (event.keyCode === 13) {
+          txt.removeEventListener('keydown', keydown_);
+          let val = txt.value
+          btn.setAttribute("disabled", "disabled")
+          txt.setAttribute("disabled", "disabled")
+          resolve(val)
+        }
+      });
+  })
+}

@@ -59,6 +59,7 @@ function pageLoad() {
     
     code = `غير_متزامن مهمة runner(labiba) {
         let labibaConsole = labiba;
+        لوحة.تفريغ();
         ${code}
         ;
         لوحة.اطبع("__________ النهاية __________")
@@ -66,7 +67,6 @@ function pageLoad() {
       runner(labiba);
     `
     code = la.transform(code);
-    console.log(code)
     vm.runInThisContext(code, 'sam.js');
     //sandbox.main()
   })
