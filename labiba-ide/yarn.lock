@@ -29,6 +29,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.8.tgz#fe444203ecef1162348cd6deb76c62477b2cc6e9"
   integrity sha512-I4+DbJEhLEg4/vIy/2gkWDvXBOOtPKV9EnLhYjMoqxcRW+TTZtUftkHktz/a8suoD5mUL7m6ReLrkPvSsCQQmw==
 
+about-window@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/about-window/-/about-window-1.13.0.tgz#8652f31a9631f38941bd4f92e31c1d62658ee95f"
+  integrity sha512-/AdIW/g1zre3d2OKQJTbZqfJWoVQvJ5ABmxU8IhwbxpA34wVNlHXIXlrCJphs4dxb+qpzmoMjCCf64dq5aXA0w==
+
 acorn-dynamic-import@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/acorn-dynamic-import/-/acorn-dynamic-import-4.0.0.tgz#482210140582a36b83c3e342e1cfebcaa9240948"

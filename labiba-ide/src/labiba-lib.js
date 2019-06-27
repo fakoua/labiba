@@ -42,15 +42,48 @@ module.exports.askText = async function(msg) {
 
   module.exports.askRange = async function(msg, min, max, step) {
     let extra = `min='${min}' max='${max}' step='${step}'`
-    let nb = await generateInput('range', msg, extra)
-    return parseInt(nb)
+    
+    let att = extra ? extra : ''
+    let id = getRandomId();
+    let inputId = `input-${id}`
+    let buttonId = `button-${id}`
+    let spanId = `span-${id}`
+    let html = ` &gt; ${msg}:<br /><input type='range' id='${inputId}' ${att}/><span id='${spanId}'>M</span> <button id='${buttonId}'>أدخل</button>`
+    appendHtml(html, 'input')
+    
+    let btn = document.getElementById(buttonId)
+    let txt = document.getElementById(inputId)
+    let sp = document.getElementById(spanId)
+    sp.innerText = txt.value;
+    txt.focus()
+    txt.addEventListener("input", function() {
+      sp.innerText =this.value;
+    });
+    return new Promise(function(resolve, reject) {
+        btn.addEventListener('click', function func_() {
+          btn.removeEventListener('click', func_)
+          let val = txt.value
+          btn.setAttribute("disabled", "disabled")
+          txt.setAttribute("disabled", "disabled")
+          resolve(parseInt(val))
+        })
+        txt.addEventListener("keydown", function keydown_(event) {
+          if (event.keyCode === 13) {
+            txt.removeEventListener('keydown', keydown_);
+            let val = txt.value
+            btn.setAttribute("disabled", "disabled")
+            txt.setAttribute("disabled", "disabled")
+            resolve(parseInt(val))
+          }
+        });
+    })
   }
 
   module.exports.askColor = async function(msg) {
     return await generateInput('color', msg)
 }
   module.exports.clear = async function() {
-    let output = document.getElementById('output');
+    let output = document.getElementById('console');
     output.innerHTML = '';
   }
 
@@ -113,7 +146,7 @@ function appendText(msg, cls) {
 }
 
 function appendHtml(html, cls) {
-  let output = document.getElementById('output');
+  let output = document.getElementById('console');
   let node = document.createElement("DIV")
   node.className = cls
   node.innerHTML = html
@@ -132,7 +165,7 @@ async function generateInput(type, msg, extra) {
   let id = getRandomId();
   let inputId = `input-${id}`
   let buttonId = `button-${id}`
-  let html = ` &gt; ${msg}: <input type='${type}' id='${inputId}' ${att}/><button id='${buttonId}'>أدخل</button>`
+  let html = ` &gt; ${msg}:<br /><input type='${type}' id='${inputId}' ${att}/> <button id='${buttonId}'>أدخل</button>`
   appendHtml(html, 'input')
   
   let btn = document.getElementById(buttonId)

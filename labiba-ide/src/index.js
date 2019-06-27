@@ -2,6 +2,9 @@ window.$ = require('jquery')
 window.jQuery = window.$
 const labiba = require('./labiba-lib') 
 const split = require('split.js')
+const about = require('about-window').default;
+const path = require('path');
+const remote = require('electron').remote
 
 $(document).ready(function() {
   $('<script/>',{type:'text/javascript', src:'./static/theme/semantic.min.js'}).appendTo('body');
@@ -74,8 +77,7 @@ function pageLoad() {
   $('#btnOpen').click(function(e) {
     e.preventDefault();
     const fs = require("fs")
-    const electron = require('electron').remote
-    const dialog = electron.dialog
+    const dialog = remote.dialog
     let file = dialog.showOpenDialog({ filters: [{name: 'لبيبة', extensions: ['la']}], properties: ['openFile'] })
     fs.readFile(file[0], function (err, data) {
         if (err) {
@@ -88,8 +90,7 @@ function pageLoad() {
     $('#btnSaveAs').click(function(e) {
       e.preventDefault();
       const fs = require("fs")
-      const electron = require('electron').remote
-      const dialog = electron.dialog
+      const dialog = remote.dialog
       let file = dialog.showSaveDialog({ filters: [{name: 'لبيبة', extensions: ['la']}]})
       let content = editor.getValue()
       fs.writeFileSync(file, content, 'utf-8')
@@ -97,7 +98,6 @@ function pageLoad() {
 
     $('#btnClose').click(function(e) {
       e.preventDefault();
-      const remote = require('electron').remote
       let w = remote.getCurrentWindow()
       w.close()
     })
@@ -107,11 +107,28 @@ function pageLoad() {
       let file = $(this).data('file')
       readExample(file)
     })
+
+    $('#btnAbout').click(function() {
+      let w = remote.getCurrentWindow()
+        about({
+          icon_path: path.join(__dirname, 'static/images/icon.png'),
+          copyright: 'Copyright (c) 2019 Sameh Fakoua',
+          product_name: 'لبيبة',
+          description: 'لغة البرمجة لبيبة باللغة العربية هي أو لغة برمجة متكاملة متوافقة مع جافاسكريبت 7',
+          homepage: 'https://fakoua.github.io/labiba/',
+          adjust_window_size: true,
+          win_title: 'حول لبيبة',
+          win_options: {
+              parent: w,
+              modal: true,
+          },
+          show_close_button: "Close"
+      })
+    });
 }
 
 function readExample(example) {
   const fs = require('fs');
-  const path = require('path');
 
   let fileName = path.join(__dirname, `static/examples/${example}.la`)
   
