@@ -47,7 +47,7 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Labiba",
-      "artifactName": "Labiba.Setup.${version}.${ext}"
+      "artifactName": "Labiba.Setup.${ext}"
     },
     "mac": {
       "category": "Education"
