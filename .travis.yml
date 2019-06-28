@@ -1,3 +1,7 @@
+os:
+  - windows
+  - linux
+  - osx
 language: node_js
 node_js:
     - "12"
@@ -18,6 +22,6 @@ script:
   - cd ..
   - cd labiba-ide
   - npm install
-  - npm run build-win
-  - npm run build-linux
-  - npm run build-mac
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then npm run build-win          ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then npm run build-linux          ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then npm run build-mac          ; fi
