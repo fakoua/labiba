@@ -10,7 +10,9 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux"
   },
   "dependencies": {
     "about-window": "^1.13.0",
@@ -46,6 +48,9 @@
       "createStartMenuShortcut": true,
       "shortcutName": "لبيبة",
       "artifactName": "Labiba.Setup.${version}.${ext}"
+    },
+    "mac": {
+      "category": "Education"
     }
   }
 }

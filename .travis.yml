@@ -18,4 +18,6 @@ script:
   - cd ..
   - cd labiba-ide
   - npm install
-  - npm run dist
+  - npm run build-win
+  - npm run build-linux
+  - npm run build-mac
