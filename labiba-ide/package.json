@@ -29,8 +29,8 @@
     "electron-builder": "^20.43.0"
   },
   "build": {
-    "appId": "لبيبة",
-    "productName": "لبيبة",
+    "appId": "Labiba",
+    "productName": "Labiba IDE",
     "fileAssociations": {
       "ext": "la",
       "name": "لغة لبيبة",
@@ -46,7 +46,7 @@
       "deleteAppDataOnUninstall": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "لبيبة",
+      "shortcutName": "Labiba",
       "artifactName": "Labiba.Setup.${version}.${ext}"
     },
     "mac": {
