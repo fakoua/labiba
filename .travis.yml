@@ -35,4 +35,4 @@ deploy:
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then Labiba IDE-mac.zip          ; fi
   skip_cleanup: true
   on:
-    repo: fakoua/labiba
+    tags: true
