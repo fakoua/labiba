@@ -2326,7 +2326,7 @@ lodash-loader@^2.0.0:
     loader-utils "~1.1.0"
     lodash "~4.17.4"
 
-lodash@^4.17.11, lodash@~4.17.4:
+lodash@4.17.14, lodash@^4.17.11, lodash@~4.17.4:
   version "4.17.14"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
   integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
