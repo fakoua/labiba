@@ -30,9 +30,9 @@ deploy:
   api_key:
     secure: d9jqP/VoM3Ti0AYBe8SuEzRb5Rfi2Iy0iXTEUTa4+r0ft/PPFm4LWyT4brlBlZMDJNJ1KIQ5XKvuF+ZlIjc9/pzGQ1OtXy6HziXuVUey9rEAil8nrfOKn3bQ8tqqIOpSkcQnQLWP74NbfqMWu4DQRmLaGLM73rTt7KX8shj6+pbRDetXMYdLHYOeqLBpjNc3xjwy4BKv/EV6POzNLABEH96MWkWk4tG4c8lk4CE12bAR5YH9dv2IUhhDN2JQyzzchHiUm5N6Fz2ohLlHpWB1Yk5Wy/F56rzhEqKomRKDVNOBO0wT85LvLWZqJxnwD4BxWTrvOps/X38C/EZ0P37ya2eDOBLp7wjaiiuxSXUXZmvSEqafqsorecJtEgcI/1ZQHZZlxTGG8EHBTSdLGg7SL5czotkR+c09UVGDGusrjBnSNiYXPCa8r6cmrNWsRvJz2FzfVu0CNGxwbkxXwLEU7lD2KD2liwk6U1+jLI2xeEVbZOfkG+rbqiS7WxlV/ZycQ6swN4SEZKodpa7Kh1I7KQjwvXO5YMb/ZSLN/0zToSORTYAT03tHpWFUrHlNE/d8Vfbmm3Ql3l8ibVBtRkR1gNvsrYu96v/3UO/bgXE27iCL0M24GkmaLTo/Kt+HPR8cA/LXZnAbPG3ab3yPbE076rANEDokzUr5uoN0FHyLmE0=
   file:
-    - if [ "$TRAVIS_OS_NAME" = "windows" ]; then labiba-ide/dist/Labiba.Setup.exe          ; fi
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then labiba-ide/dist/Labiba IDE.AppImage          ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then Labiba IDE-mac.zip          ; fi
+    - ./dist/Labiba.Setup.exe
+    - dist/Labiba IDE 1.0.8.AppImage
+    - dist/Labiba IDE-1.0.8-mac.zip
   skip_cleanup: true
   on:
     tags: true
