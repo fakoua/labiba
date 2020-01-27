@@ -15,17 +15,18 @@
     "build-linux": "electron-builder --linux"
   },
   "dependencies": {
-    "about-window": "^1.13.0",
+    "about-window": "^1.13.2",
     "dialogs": "^2.0.1",
     "jquery": "^3.4.1",
-    "lodash": "4.17.14",
-    "monaco-editor": "^0.17.0",
+    "labiba-transformer": "^0.1.3",
+    "lodash": "^4.17.15",
+    "monaco-editor": "^0.19.3",
     "split.js": "^1.5.11",
-    "tone": "^13.4.9"
+    "tone": "^13.8.25"
   },
   "devDependencies": {
-    "electron": "^5.0.3",
-    "electron-builder": "^20.43.0"
+    "electron": "^7.1.10",
+    "electron-builder": "^22.3.2"
   },
   "build": {
     "appId": "Labiba",
