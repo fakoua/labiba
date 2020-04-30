@@ -10,7 +10,9 @@
   "scripts": {
     "build": "webpack",
     "start": "yarn build & node dist\\index.js",
-    "test": "yarn build & node dist\\test.js"
+    "test": "yarn build & node dist\\test.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -24,7 +26,8 @@
   "dependencies": {
     "acorn": "^7.1.0",
     "labiba-parser": "0.0.7",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "snyk": "^1.316.1"
   },
   "keywords": [
     "labiba",
@@ -33,5 +36,6 @@
     "arabic",
     "ecmascript"
   ],
-  "runkitExample1": "runkit.js"
+  "runkitExample1": "runkit.js",
+  "snyk": true
 }
