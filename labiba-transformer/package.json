@@ -24,7 +24,7 @@
   "dependencies": {
     "acorn": "^7.1.0",
     "labiba-parser": "0.0.7",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.16"
   },
   "keywords": [
     "labiba",
