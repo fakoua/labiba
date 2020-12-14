@@ -23,7 +23,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "acorn": "^8.0.4",
+    "acorn": "^7.1.1",
     "labiba-parser": "^0.0.9",
     "lodash": "^4.17.15"
   },
