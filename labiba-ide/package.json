@@ -19,7 +19,7 @@
     "dialogs": "^2.0.1",
     "jquery": "^3.5.1",
     "labiba-transformer": "^0.1.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "monaco-editor": "^0.21.2",
     "split.js": "^1.6.2",
     "tone": "^14.7.58"
