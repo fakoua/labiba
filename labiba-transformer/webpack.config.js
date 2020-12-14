@@ -12,7 +12,10 @@ module.exports = {
   },
   module: {
     rules: [
-        { test: /\.js$/, loader: "babel-loader!lodash-loader" }
+        { 
+          test: /\.js$/,
+          use: ["babel-loader" ,"lodash-loader"]
+        }
     ]
     },
     resolve: {

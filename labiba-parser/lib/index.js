@@ -7804,7 +7804,7 @@ class NodeUtils extends UtilParser {
   }
 
   finishNodeAt(node, type, pos, loc) {
-    if (node.end > 0) {
+    if ( node.end > 0) {
       throw new Error("Do not call finishNode*() twice on the same node." + " Instead use resetEndLocation() or change type directly.");
     }
 

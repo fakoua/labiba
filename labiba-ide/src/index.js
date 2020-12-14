@@ -59,7 +59,6 @@ function pageLoad() {
     const la = require('labiba-transformer')
     
     let code = editor.getValue();
-    
     code = `غير_متزامن مهمة runner(labiba) {
         let labibaConsole = labiba;
         لوحة.تفريغ();

@@ -7,13 +7,9 @@ exports.transform = function (labibaCode) {
     const ast = parse(labibaCode)
     processTransfrom(ast)
  
-    let output = generate(ast, {
-        sourceMaps: true,
-        retainFunctionParens: true
-    });
+    let output = generate(ast, labibaCode);
     return output.code
 }
-
 exports.language = function() {
     return labibaTransfrom.language();
 }

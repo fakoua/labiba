@@ -20,7 +20,6 @@ module.exports = function(api) {
   switch (env) {
     // Configs used during bundling builds.
     case "asx-parser":
-      console.log("------------- SAMEHHHHHHHHHHHHHHHHHHHHHHHHHHHHH -------");
       convertESM = false;
       ignoreLib = false;
       envOpts.targets = {
