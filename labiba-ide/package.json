@@ -12,17 +12,20 @@
     "start": "electron .",
     "build-win": "electron-builder --win",
     "build-mac": "electron-builder --mac",
-    "build-linux": "electron-builder --linux"
+    "build-linux": "electron-builder --linux",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "about-window": "^1.13.2",
     "dialogs": "^2.0.1",
-    "jquery": "^3.5.1",
+    "jquery": "^3.5.0",
     "labiba-transformer": "^0.1.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.21.2",
     "split.js": "^1.6.2",
-    "tone": "^14.7.58"
+    "tone": "^14.7.58",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "electron": "^11.0.3",
@@ -37,7 +40,9 @@
       "icon": "src/static/images/icon.png"
     },
     "win": {
-      "publish": ["bintray"],
+      "publish": [
+        "bintray"
+      ],
       "target": [
         "nsis"
       ],
@@ -53,5 +58,6 @@
     "mac": {
       "category": "Education"
     }
-  }
+  },
+  "snyk": true
 }
